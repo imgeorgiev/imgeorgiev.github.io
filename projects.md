@@ -13,8 +13,8 @@ For the majority of my time at University I have been involved with Edinburgh Un
 
 
 <p float="left">
-  <img src="/img/slider/EUFS_Picture_1.jpg" width="200" />
-  <img src="/img/slider/EUFS_Picture_3.jpg" width="200" /> 
+  <img src="/img/slider/EUFS_Picture_1.jpg" width="400" />
+  <img src="/img/slider/EUFS_Picture_3.jpg" width="400" /> 
 </p>
 
 
