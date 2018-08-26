@@ -14,7 +14,12 @@ For the majority of my time at University I have been involved with Edinburgh Un
 
 Solarized dark             |  Solarized Ocean
 :-------------------------:|:-------------------------:
-![EUFS Autonomous team](img/slider/EUFS_Picture_1.jpg)   |  ![EUFS Autonomous team](img/slider/EUFS_Picture_3.jpg)
+![EUFS Autonomous team]()   |  ![EUFS Autonomous team]()
+
+<p float="left">
+  <img src="img/slider/EUFS_Picture_1.jpg" width="200" />
+  <img src="img/slider/EUFS_Picture_3.jpg" width="200" /> 
+</p>
 
 
 [![](https://img.youtube.com/vi/Ic7Szt7nbeI/0.jpg)](https://www.youtube.com/watch?v=Ic7Szt7nbeI)
