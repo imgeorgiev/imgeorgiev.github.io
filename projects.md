@@ -24,4 +24,9 @@ Solarized dark             |  Solarized Ocean
 You can read more this story at [the University article about us](https://www.ed.ac.uk/informatics/news-events/stories/2018/students-on-quest-for-high-speed-success) or at the [team webpage](http://eufs.eusa.ed.ac.uk)
 
 ## Python courses
+I have developed a series of Python courses aimed to teach both general-purpose and research-orientated programming skills. These were aimed to introduce begginners to the world of coding in a easy and safe way. As a result the start from the absolute basics of programming and go all the way up to physics simulations and big data applications. This was done in Jupyter notebook for a user-friendly experience and can be found on my github account. 
+
+
+## Weather Widget
+As a side project, I developed a hacky cheap Nest alternative which can display time, weather forcast, ambient information and can be controlled via a touch screen. Furthermore it can be connected to other WiFi enabled devices and can control other IoT devices using MQTT. All of this for less than 30$. I still keep one on my wall to this date :) . Missed business opportunity right here. The project including source code and PCB design and manufacturing instructions can be found on my github.
 
