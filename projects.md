@@ -12,8 +12,8 @@ For the majority of my time at University, I have been involved with Edinburgh U
 
 
 <p float="left">
-  <img src="/img/slider/EUFS_Picture_1.jpg" width="300" />
-  <img src="/img/slider/EUFS_Picture_3.jpg" width="300" /> 
+  <img src="/img/slider/EUFS_Picture_1.jpg" width="360" />
+  <img src="/img/slider/EUFS_Picture_3.jpg" width="360" /> 
 </p>
 
 
