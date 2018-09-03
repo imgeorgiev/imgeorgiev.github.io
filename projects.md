@@ -8,7 +8,7 @@ carbonads: true
 
 
 ## [Formula Student](http://eufs.eusa.ed.ac.uk)
-For the majority of my time at University, I have been involved with Edinburgh University Formula Student whose aim is to provide undergraduate students with the opportunity to design and build a single-seat racecar for competition and get a bunch of experience along the way. My main contribution to that is the founding the Autonomous branch of the team which addressed the new competition format - Formula Student Driverless challenging students to develop a fully autonomous racecar. Within a single year, I gathered a team of talented students from the University of Edinburgh with which we developed the self-driving software and attended the Formula Student UK 2018 competition. We successfully uploaded our software to the vehicle provided by the competition organisers and completed an autonomous lap. Also, I've raised 5-digit figures of funding for the team throughout the years.
+For the majority of my time at University, I have been involved with Edinburgh University Formula Student whose aim is to provide undergraduate students with the opportunity to design and build a single-seat racecar for competition and get a bunch of experience along the way. My main contribution to that is the founding the Autonomous branch of the team which addressed the new competition format - Formula Student Driverless challenging students to develop a fully autonomous racecar. Within a single year, I gathered a team of talented students from the University of Edinburgh with which we developed the self-driving software and attended the Formula Student UK 2018 competition. We successfully uploaded our software to the vehicle provided by the competition organisers and completed an autonomous lap.
 
 Technically, I have been involved in various parts of the whole car including but not limited to path planning and control using cutting-edge algorithms such as MPPI, landmark SLAMs and VSLAM approaches, state estimation using EKFs and machine learning object extraction via cameras and Lidar.
 
@@ -16,8 +16,8 @@ My personal development from this project has been so enormous that it is hard t
 
 
 <p float="centre">
-  <img src="img/slider/EUFS_Picture_1.jpg" width="360" />
-  <img src="img/slider/EUFS_Picture_3.jpg" width="360" /> 
+  <img src="/img/slider/EUFS_Picture_1.jpg" width="360" />
+  <img src="/img/slider/EUFS_Picture_3.jpg" width="360" /> 
 </p>
 
 
