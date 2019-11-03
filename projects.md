@@ -8,23 +8,36 @@ carbonads: true
 
 
 ## [Formula Student](http://eufs.eusa.ed.ac.uk)
-For the majority of my time at University, I have been involved with Edinburgh University Formula Student whose aim is to provide undergraduate students with the opportunity to design and build a single-seat racecar for competition and get a bunch of experience along the way. My main contribution to that is the founding the Autonomous branch of the team which addressed the new competition format - Formula Student Driverless challenging students to develop a fully autonomous racecar. Within a single year, I gathered a team of talented students from the University of Edinburgh with which we developed the self-driving software and attended the Formula Student UK 2018 competition. We successfully uploaded our software to the vehicle provided by the competition organisers and completed an autonomous lap.
+For the majority of my time at University, I have been involved with Edinburgh University Formula Student whose aim is to provide
+undergraduate students with the opportunity to design and build a single-seat racecar for competition and get a bunch of experience
+along the way. My main contribution to that is the founding the Autonomous branch of the team which addressed the new competition
+format - Formula Student Driverless challenging students to develop a fully autonomous racecar. Within a single year, I gathered
+a team of talented students from the University of Edinburgh with which we developed the self-driving software and attended
+the Formula Student UK 2018 competition. We successfully uploaded our software to the vehicle provided by the competition
+organisers and completed an autonomous lap.
 
-Technically, I have been involved in various parts of the whole car including but not limited to path planning and control using cutting-edge algorithms such as MPPI, landmark SLAMs and VSLAM approaches, state estimation using EKFs and machine learning object extraction via cameras and Lidar.
+Technically, I have been involved in various parts of the whole car including but not limited to path planning and control
+using cutting-edge algorithms such as MPPI, landmark SLAMs and VSLAM approaches, state estimation using EKFs and machine
+learning object extraction via cameras and Lidar.
 
-My personal development from this project has been so enormous that it is hard to describe it with words. It has taught me how to work in a team, communicate ideas; it has allowed me to obtain practical experience, hone my technical skills and apply the theory I have learned in the classroom. Formula Student started my interest in robotics and self-driving cars and even made me change my degree. To put it simply, I owe much of what I am today to the Edinburgh University Formula Student (EUFS) team and all of the wonderful people behind it. 
+My personal development from this project has been so enormous that it is hard to describe it with words. It has taught me
+how to work in a team, communicate ideas; it has allowed me to obtain practical experience, hone my technical skills and apply
+the theory I have learned in the classroom. Formula Student started my interest in robotics and self-driving cars and even made
+me change my degree. To put it simply, I owe much of what I am today to the Edinburgh University Formula Student (EUFS) team and
+all of the wonderful people behind it.
 
 
 <p float="centre">
-  <img src="/img/slider/EUFS_Picture_1.jpg" width="360" />
-  <img src="/img/slider/EUFS_Picture_3.jpg" width="360" /> 
+  <img src="/img/slider/eufs-ai-1.jpeg" width="360" />
+  <img src="/img/slider/eufs-ai-2.jpg" width="360" />
 </p>
 
 
-[![](https://img.youtube.com/vi/Ic7Szt7nbeI/0.jpg)](https://www.youtube.com/watch?v=Ic7Szt7nbeI)
+[![](https://img.youtube.com/vi/Ic7Szt7nbeI/0.jpg)](https://www.youtube.com/watch?v=9lIufDPgeuw)
 
 
-You can read more about this story at [the University article about us](https://www.ed.ac.uk/informatics/news-events/stories/2018/students-on-quest-for-high-speed-success) or the [team webpage](http://eufs.eusa.ed.ac.uk)
+You can read more about this story at [the University article about us](https://www.ed.ac.uk/informatics/news-events/stories/2018/students-on-quest-for-high-speed-success)
+or the [team webpage](http://eufs.eusa.ed.ac.uk/ai)
 
 ## Python courses
 I have developed a series of Python courses aimed to teach both general-purpose and research-orientated programming skills. These were intended to introduce beginners to the world of coding easily and safely. As a result of the start from the absolute basics of programming and go all the way up to physics simulations and big data applications. These courses were done in Jupyter notebook for a user-friendly experience and can be found on my GitHub account.
