@@ -8,6 +8,12 @@ carbonads: true
 
 
 ## [Formula Student](http://eufs.eusa.ed.ac.uk)
+
+<p float="centre">
+  <img src="/img/slider/eufs-ai-1.jpeg" width="360" />
+  <img src="/img/slider/eufs-ai-2.jpg" width="360" />
+</p>
+
 For the majority of my time at University, I have been involved with Edinburgh University Formula Student whose aim is to provide
 undergraduate students with the opportunity to design and build a single-seat racecar for competition and get a bunch of experience
 along the way. My main contribution to that is the founding the Autonomous branch of the team which addressed the new competition
@@ -26,11 +32,6 @@ the theory I have learned in the classroom. Formula Student started my interest 
 me change my degree. To put it simply, I owe much of what I am today to the Edinburgh University Formula Student (EUFS) team and
 all of the wonderful people behind it.
 
-
-<p float="centre">
-  <img src="/img/slider/eufs-ai-1.jpeg" width="360" />
-  <img src="/img/slider/eufs-ai-2.jpg" width="360" />
-</p>
 
 
 [![](https://img.youtube.com/vi/Ic7Szt7nbeI/0.jpg)](https://www.youtube.com/watch?v=9lIufDPgeuw)
