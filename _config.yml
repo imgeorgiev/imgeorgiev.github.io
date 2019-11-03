@@ -25,6 +25,7 @@ description: My personal page
 navbar-links:
   Home: ""
   About Me: "aboutme"
+  Resume: "resume"
   Projects: "projects"
 
 # Image to show in the navigation bar - image must be a square (width = height)
