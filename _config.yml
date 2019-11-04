@@ -70,16 +70,16 @@ author:
 # You can reorder the items to define the link order.
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
-  rss: true
+  # rss: true
   email: "ignat.m.georgiev@gmail.com"
   facebook: imgeorgiev
   github: Ignat-Georgiev
-  twitter: imgeorgiev
-  reddit: nacho_rz
+#  twitter: blank
+#  reddit: blank
 #  google-plus: +DeanAttali
   linkedin: ignat-georgiev-77a36811a
 #  xing: yourname
-  stackoverflow: "9819486/imgeorgiev"
+#  stackoverflow: "9819486/imgeorgiev"
 #  snapchat: deanat78
 #  instagram: deanat78
 #  youtube: user/deanat78
