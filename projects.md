@@ -45,15 +45,28 @@ all of the wonderful people behind it!
 You can read more about this story at [the University article about us](https://www.ed.ac.uk/informatics/news-events/stories/2018/students-on-quest-for-high-speed-success)
 or the [team webpage](http://eufs.eusa.ed.ac.uk/ai)
 
-## Drone racing
-I have also picked up a hobby inline with my interest - racing quadcopters. I have built myself a light
-and powerful quad called Diana and she is capable of reaching speeds up to 160 kph. I have built her
-using commercially available components, designed and 3D printed her some extras and configured
-a controller for her using the open-source software Betaflight. In fact, I love this hobby so much
+## Quadcopters
+
+I have picked up a hobby inline with my interest - racing quadcopters. I have built myself a light
+and powerful quad called Diana. She is capable of reaching speeds up to 160 kph. I have built her
+using commercially available components, designed and 3D printed her some extras and programmed
+her using the open-source software Betaflight. In fact, I love this hobby so much
 that I have became an active contributor of Betaflight.
 
 <p style="text-align:center;">
     <img src="/img/diana.jpg" width="360" />
+</p>
+
+## [Sample collection robot](https://gitlab.com/imgeorgiev/rss_turtlebot)
+
+For a course in university, I developed the software for a sample collection
+robot based on a Turtlebot3 robot with a manipulator. The robot is capable
+of localizing and autonomously navigating within a known environment. It
+can also use its arm to push buttons, move obstacles and collect samples
+(yes mars rover style). The open source repository of the project is [here](https://gitlab.com/imgeorgiev/rss_turtlebot)
+
+<p style="text-align:center;">
+    <img src="/img/turtlebot.gif" width="360" />
 </p>
 
 ## Python courses
