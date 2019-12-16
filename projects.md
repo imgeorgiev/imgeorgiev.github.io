@@ -40,7 +40,9 @@ my interest in robotics and self-driving cars and even made me change my degree.
 I owe much of what I am today to the Edinburgh University Formula Student (EUFS) team and
 all of the wonderful people behind it!
 
-[![](https://img.youtube.com/vi/Ic7Szt7nbeI/0.jpg)](https://www.youtube.com/watch?v=9lIufDPgeuw)
+<p style="text-align:center;">
+    <img src="/img/eufs.gif" width="460" />
+</p>
 
 You can read more about this story at [the University article about us](https://www.ed.ac.uk/informatics/news-events/stories/2018/students-on-quest-for-high-speed-success)
 or the [team webpage](http://eufs.eusa.ed.ac.uk/ai)
@@ -54,7 +56,7 @@ her using the open-source software Betaflight. In fact, I love this hobby so muc
 that I have became an active contributor of Betaflight.
 
 <p style="text-align:center;">
-    <img src="/img/diana.jpg" width="360" />
+    <img src="/img/diana.jpg" width="460" />
 </p>
 
 ## [Sample collection robot](https://gitlab.com/imgeorgiev/rss_turtlebot)
@@ -66,7 +68,7 @@ can also use its arm to push buttons, move obstacles and collect samples
 (yes mars rover style). The open source repository of the project is [here](https://gitlab.com/imgeorgiev/rss_turtlebot)
 
 <p style="text-align:center;">
-    <img src="/img/turtlebot.gif" width="360" />
+    <img src="/img/turtlebot.gif" width="460" />
 </p>
 
 ## Python courses
