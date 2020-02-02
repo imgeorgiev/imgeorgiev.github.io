@@ -88,7 +88,7 @@ Now you shouldn’t see any red text and CLion should work as expected!
 
 By default CLion uses its own custom build and debug directories which don’t match the ROS ones. We’ll need to configure CLion to build code in the place where ROS expects it. To do this go to **File > Settings > Build, Execution, Deployment > CMake** and change two fields:
 
-- In Generation path, set `/home/[user]/catkin_ws/build`.
+- In Generation path, set `/home/[user]/catkin_ws/build`
 - In CMake options, add `-DCATKIN_DEVEL_PREFIX:PATH=/home/[user]/catkin_ws/devel`
 
 Now, let’s build the code with debugging enabled! Just press the green hammer icon (🔨) on the top right of the window.
