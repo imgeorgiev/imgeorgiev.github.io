@@ -1,8 +1,8 @@
 ---
 layout: post
 title: My journey into FPV
-image: http://www.imgeorgiev.com/img/flying-quad.jpg
-tags: 
+image: https://i1.wp.com/blog.dronetrest.com/wp-content/uploads/2016/05/helipal-com-storm-racing-drone-f1.jpg?fit=1920%2C1080&ssl=1
+tags: quadcopters
 ---
 
 One day last summer while I was having an internship at Roborace, a colleague of mine turned up to work with a very dodgy looking contraption strapped to his backpack. It had bare circuit boards, exposed wires and looked like an electronics project I would have had in high school.
