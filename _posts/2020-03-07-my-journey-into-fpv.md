@@ -1,7 +1,7 @@
 ---
 layout: post
 title: My journey into FPV
-image: https://i1.wp.com/blog.dronetrest.com/wp-content/uploads/2016/05/helipal-com-storm-racing-drone-f1.jpg?fit=1920%2C1080&ssl=1
+image: https://sep.yimg.com/ay/yhst-90268561309754/arris-x220-v2-220mm-5-fpv-racing-quad-rtf-w-radiolink-at9s-49.png
 tags: quadcopters, robotics
 ---
 
