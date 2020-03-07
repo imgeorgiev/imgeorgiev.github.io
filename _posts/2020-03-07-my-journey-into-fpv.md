@@ -1,3 +1,10 @@
+---
+layout: post
+title: My journey into FPV
+image: http://www.imgeorgiev.com/img/flying-quad.jpg
+tags: 
+---
+
 One day last summer while I was having an internship at Roborace, a colleague of mine turned up to work with a very dodgy looking contraption strapped to his backpack. It had bare circuit boards, exposed wires and looked like an electronics project I would have had in high school.
 
 I got curious, took a 2nd look and oh it looked like a drone. As any excited roboticists, I went to ask him what that is. "Is this a disassembled DJI drone?", he just laughed. Then he told me it was actually a racing drone and that he built it himself.  I immediately asked him to show me how it flies here, in the office. He laughed again and explained that his drone could cover the length of the office in less than a second. At that point, I probably looked like a 9-year-old who just discovered video games.
