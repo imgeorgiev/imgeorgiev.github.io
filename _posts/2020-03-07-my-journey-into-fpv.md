@@ -30,9 +30,7 @@ If you want to learn about other simulators have a [look here](https://www.getfp
 In parallel to learning how to fly, I also learned about the hobby. I watched a lot of YouTube videos, read blog pages, forums and absorbed as much as I could. There's not much point in me reiterating what is already on the Internet so I'll just point you to the resources I used:
 
 * [Joshua Bardwell’s YouTube](https://www.youtube.com/channel/UCX3eufnI7A2I7IkKHZn8KSQ) - literally the god of fpv building. Also has full build guides
-
 * [getfpv](https://www.getfpv.com/learn/) - awesome website with the basics of fpv in written form
-
 * [RotorBuilds](https://rotorbuilds.com/) - example builds by other hobbyists
 
 # My first quad
@@ -184,7 +182,7 @@ Building her was a long process involving mostly electrical work of soldering co
 
 After 14 flight sessions, dozens and dozens of crashes, including hitting myself once, I have finally tamed Diana and can do some simple tricks!
 
-[https://www.youtube.com/watch?v=rKsNU2oq128](https://www.youtube.com/watch?v=rKsNU2oq128)
+{% include youtubePlayer.html id="rKsNU2oq128" %}
 
 # Missteps 
 
