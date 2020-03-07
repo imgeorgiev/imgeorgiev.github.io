@@ -27,9 +27,10 @@ Technically, I have been involved in about every part of our car but I have focu
 I have led the development of:
 - Development of our [own simulation](https://gitlab.com/eufs/eufs_sim)
 - Real-time CNN stereo camera object detection
-- Fusing camera and Lidar object detection algorithms
+- Lidar object detecion
+- Object fusion with camera and lidar
 - Dynamic state estimation by fusing 4 sensor inputs asynchronously with an Extended Kalman Filter (EKF)
-- Localisation and Mapping of the track using FastSLAMv2
+- Localisation and Mapping of the track using FastSLAM
 - Planning and Control for the car using an innovative algorithm called Model Predictive Path Integral (MPPI).
 Actually, I did my [dissertation](files/Ignat_MInf1_project.pdf) on it.
 
