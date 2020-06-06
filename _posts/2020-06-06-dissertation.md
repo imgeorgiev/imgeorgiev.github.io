@@ -17,10 +17,7 @@ resulting in a system which generalises well, learns accurate dynamics and adapt
 robustly to changing dynamics. Sadly, it can only adapt to short-term changes in
 dynamics due to the batch training nature of neural networks.
 
-<div class="video-container">
-    <iframe src="https://youtu.be/aLWXa95AEKE" frameborder="0" allowfullscreen>
-    </iframe>
-</div>
+{% include youtubePlayer.html id="aLWXa95AEKE" %}
 
 Even though I didn't achieve everything I had planned to, this experience has taught
 me to look past the idealistic aspects of both motion control and machine learning,
