@@ -1,8 +1,9 @@
 ---
 layout: post
 title: Debugging ROS
+subtitle: A guide on how to do real-time CPP debugging in ROS using the CLion IDE
 image: https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2018/11/26/ros-logo.jpg
-tags: robotics, software
+tags: [robotics, software]
 ---
 
 Throughout my time in robotics, I have noticed that not many people use debuggers when developing C++ for ROS. Reasons vary from "debuggers are useless when you run real robots" to "there are no good tools for that".
