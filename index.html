@@ -3,7 +3,8 @@ layout: page
 title: "Hi, I'm Ignat Georgiev"
 subtitle: Roboticist | Machine Learning | Motion Control 
 css: "/css/index.css"
-meta-description: "Student at Edinburgh University with an interest in robotics and AI"
+meta-title: "Ignat Georgiev - Roboticist"
+meta-description: "Aspiring graduate roboticists passionate about motion control and machine learning"
 datacampcourse: true
 bigimg:
   - "/img/slider/edi-bg.jpg" : "Edinburgh at night time"
@@ -12,3 +13,52 @@ bigimg:
   - "/img/slider/roborace-drive.jpg" : "About to be driven by an autonomous racecar"
 
 ---
+
+<div id="aboutme-section">
+    <p style="margin-bottom:1cm;">
+        I'm an enthusiastic, dedicated and hard-working student set to graduate my Master’s in 2020. I am passionate about robotics and believe that with the help of AI they will cause the next industrial revolution, and I would like to be part of it! This belief led me to establish an autonomous racecar student project within my university.
+    </p>
+    <p>
+        This little website is my space to tell the world <strong><a href="/aboutme">about me</a></strong>, put <strong><a href="/resume">my CV</a></strong> out there, show off my <strong><a href="/projects">projects</a></strong> and make my contribution to the robot revolution.
+    </p>
+</div>
+
+
+<div class="posts-list">
+  {% for post in paginator.posts %}
+  <article>
+    <a class="post-preview" href="{{ post.url | prepend: site.baseurl }}">
+	    <h2 class="post-title">{{ post.title }}</h2>
+	
+	    {% if post.subtitle %}
+	    <h3 class="post-subtitle">
+	      {{ post.subtitle }}
+	    </h3>
+	    {% endif %}
+      <p class="post-meta">
+        Posted on {{ post.date | date: "%B %-d, %Y" }}
+      </p>
+
+      <div class="post-entry">
+        {{ post.content | truncatewords: 50 | strip_html | xml_escape}}
+        <span href="{{ post.url | prepend: site.baseurl }}" class="post-read-more">[Read&nbsp;More]</span>
+      </div>
+    </a>  
+   </article>
+  {% endfor %}
+</div>
+
+{% if paginator.total_pages > 1 %}
+<ul class="pager main-pager">
+  {% if paginator.previous_page %}
+  <li class="previous">
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+  </li>
+  {% endif %}
+  {% if paginator.next_page %}
+  <li class="next">
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+  </li>
+  {% endif %}
+</ul>
+{% endif %}
