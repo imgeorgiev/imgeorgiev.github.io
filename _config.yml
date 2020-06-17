@@ -12,10 +12,11 @@ author: Ignat Georgiev
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  Blog: ""
+  Home: ""
   Projects: "projects"
   About Me: "aboutme"
   Resume: "files/Ignat-Georgiev-CV-2020.pdf"
+nav-search: "search"
 
 # --- Logo --- #
 
@@ -31,6 +32,15 @@ round-avatar: true
 #title-img: /path/to/image
 
 # --- Footer options --- #
+
+# Change all these values or delete the ones you don't want.
+# Important: you must keep the "name" parameter, everything else you can remove
+author:
+  name: Ignat Goergiev
+  email: "ignat.m.georgiev@gmail.com"
+  facebook: imgeorgiev
+  gitlab: imgeorgiev
+  linkedin: imgeorgiev
 
 # Select your active Social Network Links.
 # Uncomment the links you want to show in the footer and add your information to each link.
