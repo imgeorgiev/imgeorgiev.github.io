@@ -2,7 +2,7 @@
 layout: post
 title: First post!
 image: /img/ignat-adsdv.jpg
-tags: 
+tags: [updates]
 ---
 
 About 2 years ago something sparked up in my head and said: *“Wouldn't it be cool to start a blog”*. Since then I’ve debated in my head with questions like *“Do I even have enough time for this?”*, *“What would this blog even be about?”* and *“What’s the whole point of it?”*.

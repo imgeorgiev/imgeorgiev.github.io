@@ -1,8 +1,9 @@
 ---
 layout: post
 title: Dissertation submitted
+subtitle: Reaching the end of my Master's I have finally submitted my dissertation of which I am extremely proud!
 image: /img/diss_cover.png
-tags: 
+tags: [robotics, updates]
 ---
 
 

@@ -1,8 +1,9 @@
 ---
 layout: post
 title: My journey into FPV
+subtitle: I have recently gotten into the world of FPV drone racing. It's a passionate hobby of mine which combines many of my interests and I'd like to share my journey
 image: https://sep.yimg.com/ay/yhst-90268561309754/arris-x220-v2-220mm-5-fpv-racing-quad-rtf-w-radiolink-at9s-49.png
-tags: quadcopters, robotics
+tags: [quadcopters, robotics]
 ---
 
 One day last summer while I was having an internship at Roborace, a colleague of mine turned up to work with a very dodgy looking contraption strapped to his backpack. It had bare circuit boards, exposed wires and looked like an electronics project I would have had in high school.
