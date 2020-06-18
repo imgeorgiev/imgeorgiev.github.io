@@ -1,26 +1,37 @@
 ---
 layout: page
-title: "Hi, I'm Ignat"
-subtitle: Roboticist | Machine Learning | Motion Control 
+title: "Hi, I'm Ignat Georgiev"
+subtitle: Roboticist | Machine Learning | Motion Control
 css: "/css/index.css"
 meta-title: "Ignat Georgiev - Roboticist"
 meta-description: "Aspiring graduate roboticists passionate about motion control and machine learning"
 datacampcourse: true
 bigimg:
-  - "/img/slider/edi-bg.jpg" : "Edinburgh at night time"
-  - "/img/slider/eufs-ai-1.jpeg" : "EUFS AI car"
-  - "/img/slider/eufs-ai-2.jpg" : "EUFS AI on the winning podium"
-  - "/img/slider/roborace-drive.jpg" : "About to be driven by an autonomous racecar"
+- "/img/slider/edi-bg.jpg" : "Edinburgh at night time"
+- "/img/slider/eufs-ai-1.jpeg" : "EUFS AI car"
+- "/img/slider/eufs-ai-2.jpg" : "EUFS AI on the winning podium"
+- "/img/slider/roborace-drive.jpg" : "About to be driven by an autonomous racecar"
 
 ---
 
 <div id="aboutme-section">
-    <p style="margin-bottom:1cm;">
-        I'm an enthusiastic, dedicated and hard-working student set to graduate my Master’s in 2020. I am passionate about robotics and believe that with the help of AI they will cause the next industrial revolution, and I would like to be part of it! This belief led me to establish an autonomous racecar student project within my university.
-    </p>
-    <p>
-        This little website is my space to tell the world <strong><a href="/aboutme">about me</a></strong>, put <strong><a href="/resume">my CV</a></strong> out there, show off my <strong><a href="/projects">projects</a></strong> and make my contribution to the robot revolution.
-    </p>
+  <p style="margin-bottom:1cm;">
+    I am an enthusiastic, dedicated and hard-working recent graduate.
+    I am passionate about robotics and believe that with the help of AI they will cause the next
+    industrial revolution, and I would like to be part of it
+  </p>
+  <p>
+    This little website is my space to tell the world <strong><a href="/aboutme">about me</a></strong>,
+    put <strong><a href="/resume">my CV</a></strong> out there, show off my
+    <strong><a href="/projects">projects</a></strong> and make my contribution to the robot revolution
+    via the blog below. Oh and I ocassionaly post about racing quadcopters.
+  </p>
+
+  <p>
+    <strong>I am currently open to opportunities</strong> in the Robotics & AI and willing to relocate
+    anywhere in the world. If you have something interesting,
+    you can <a href="mailto:ignat.m.georgiev@gmail.com?subject=Hello from imgeorgiev.com">get in touch</a>.
+  </p>
 </div>
 
 
@@ -28,13 +39,13 @@ bigimg:
   {% for post in paginator.posts %}
   <article class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
-	  <h2 class="post-title">{{ post.title }}</h2>
+      <h2 class="post-title">{{ post.title }}</h2>
 
-	  {% if post.subtitle %}
-	  <h3 class="post-subtitle">
-	    {{ post.subtitle }}
-	  </h3>
-	  {% endif %}
+      {% if post.subtitle %}
+      <h3 class="post-subtitle">
+        {{ post.subtitle }}
+      </h3>
+      {% endif %}
     </a>
 
     <p class="post-meta">
@@ -53,7 +64,7 @@ bigimg:
         {{ post.excerpt | strip_html | xml_escape | truncatewords: site.excerpt_length }}
         {% assign excerpt_word_count = post.excerpt | number_of_words %}
         {% if post.content != post.excerpt or excerpt_word_count > site.excerpt_length %}
-          <a href="{{ post.url | prepend: site.baseurl }}" class="post-read-more">[Read&nbsp;More]</a>
+        <a href="{{ post.url | prepend: site.baseurl }}" class="post-read-more">[Read&nbsp;More]</a>
         {% endif %}
       </div>
     </div>
@@ -66,12 +77,12 @@ bigimg:
       <a href="{{ site.baseurl }}/tags#{{- tag -}}">{{- tag -}}</a>
       {% endfor %}
       {% else %}
-        {{ post.tags | join: ", " }}
+      {{ post.tags | join: ", " }}
       {% endif %}
     </div>
     {% endif %}
 
-   </article>
+  </article>
   {% endfor %}
 </div>
 
