@@ -30,14 +30,17 @@ round-avatar: true
 
 # --- Footer options --- #
 
+# These don't seem to work for the time being
 # Change all these values or delete the ones you don't want.
 # Important: you must keep the "name" parameter, everything else you can remove
-author:
-  name: Ignat Goergiev
-  email: "ignat.m.georgiev@gmail.com"
-  facebook: imgeorgiev
-  gitlab: imgeorgiev
-  linkedin: imgeorgiev
+# author:
+#   name: Ignat Goergiev
+#   email: "ignat.m.georgiev@gmail.com"
+#   facebook: imgeorgiev
+#   gitlab: imgeorgiev
+#   linkedin: imgeorgiev
+
+author: Ignat Georgiev
 
 # Select your active Social Network Links.
 # Uncomment the links you want to show in the footer and add your information to each link.
