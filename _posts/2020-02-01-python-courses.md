@@ -1,12 +1,12 @@
 ---
 layout: post
 title: Python courses
-# subtitle: TODO
+subtitle: Python courses I have developed for beginners in coding and data science
 # image: TODO
-# tags: TODO
+tags: [projects, tutorials]
 ---
 
-Once I wored as a **Digital Skills tutor** at the University of Edinburgh I have developed a series of Python
+Once I worked as a **Digital Skills tutor** at the University of Edinburgh I have developed a series of Python
 courses aimed to teach both general-purpose and research-orientated
 programming skills. These were intended to introduce beginners to the world of coding easily and safely.
 As a result of the start from the absolute basics of programming and go all the way up to physics simulations

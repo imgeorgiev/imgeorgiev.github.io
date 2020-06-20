@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Weather Widget
-# subtitle: TODO
-# cover-img: TODO
-# tags: TODO
+subtitle: I've developed a small embedded Nest-like device which shows weather and control smart-home appliances 
+cover-img: TODO
+tags: [projects, embedded]
 ---
 
 As a side project, I developed a hacky cheap Nest alternative which can display time, weather forecast,
