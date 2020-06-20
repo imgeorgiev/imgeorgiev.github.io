@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Sample Collection Robot
-subtitle: TODO
-#cover-img: #TODO
+subtitle: For a course in university, I developed the software for a sample collection robot based on a Turtlebot3 robot with a manipulator.
+cover-img: /img/turtlebot.gif
 tags: [robotics, projects]
 ---
 

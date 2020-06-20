@@ -2,7 +2,7 @@
 layout: post
 title: Weather Widget
 subtitle: I've developed a small embedded Nest-like device which shows weather and control smart-home appliances 
-cover-img: TODO
+cover-img: https://user-content.gitlab-static.net/dfc053c3347de799b85cd99fa59cf4b4476246d4/687474703a2f2f692e696d6775722e636f6d2f426766715051302e6a7067
 tags: [projects, embedded]
 ---
 
