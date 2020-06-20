@@ -1,15 +1,10 @@
 ---
 layout: post
 title: Formula Student
-subtitle: Reaching the end of my Master's I have finally submitted my dissertation of which I am extremely proud!
+subtitle: My passion throughout university - I founded and led a student team to develop an autonomous racecar
 cover-img: /img/slider/eufs-ai-1.jpeg
 tags: [robotics, projects]
 ---
-
-
-<p float="centre">
-  <img src="/img/slider/eufs-ai-2.jpg" width="480" />
-</p>
 
 For the majority of my time at University, I have been involved with Edinburgh University Formula Student (EUFS)
 which is a student project competing in the prestigious [Formula Student](https://www.imeche.org/events/formula-student)
@@ -19,6 +14,10 @@ about 40 students to 2 victories in the UK competition** and have raised a budge
 This allowed me to obtain practical hands-on experience in the topics I am interested in (Robotics and AI)
 as well as develop my **team working, management, leadership and communication skills**.
 
+<!-- <p float="centre">
+  <img src="/img/slider/eufs-ai-2.jpg" width="480" />
+</p> -->
+![EUFS on the winners podium](/img/slider/eufs-ai-2.jpg)
 
 Technically, I have been involved in about every part of our car but I have focused mostly on the software side.
 I have led the development of:
