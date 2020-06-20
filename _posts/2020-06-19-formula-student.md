@@ -14,9 +14,6 @@ about 40 students to 2 victories in the UK competition** and have raised a budge
 This allowed me to obtain practical hands-on experience in the topics I am interested in (Robotics and AI)
 as well as develop my **team working, management, leadership and communication skills**.
 
-<!-- <p float="centre">
-  <img src="/img/slider/eufs-ai-2.jpg" width="480" />
-</p> -->
 ![EUFS on the winners podium](/img/slider/eufs-ai-2.jpg)
 
 Technically, I have been involved in about every part of our car but I have focused mostly on the software side.
@@ -38,9 +35,7 @@ my interest in robotics and self-driving cars and even made me change my degree.
 I owe much of what I am today to the Edinburgh University Formula Student (EUFS) team and
 all of the wonderful people behind it!
 
-<p style="text-align:center;">
-    <img src="/img/eufs.gif" width="480" />
-</p>
+![Data visualization from one of our runs](/img/eufs.gif)
 
 You can read more about this story at [the University article about us](https://www.ed.ac.uk/informatics/news-events/stories/2018/students-on-quest-for-high-speed-success)
 or the [team webpage](http://eufs.eusa.ed.ac.uk/ai)
