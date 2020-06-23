@@ -2,7 +2,7 @@
 layout: post
 title: Sample Collection Robot
 subtitle: For a course in university, I developed the software for a sample collection robot based on a Turtlebot3 robot with a manipulator.
-cover-img: /img/blog/2020-07-18-sample-collection-robot/turtlebot.gif
+cover-img: /img/blog/2020-06-18-sample-collection-robot/turtlebot.gif
 tags: [robotics, projects]
 ---
 
@@ -17,7 +17,7 @@ chosen between two possible locations.
 * Navigating to one of the predefined sample collection points and picking up a rock sample.
 * Navigating back to its base in less than 5 minutes since the start.
 
-![The environment](/img/blog/2020-07-18-sample-collection-robot/rss_environment.jpg)
+![The environment](/img/blog/2020-06-18-sample-collection-robot/rss_environment.jpg)
 
 _Note that due to the scope and short time span of the project, computer vision has not
 been used and instead has been accounted for by predefined positions of objects._
@@ -35,7 +35,7 @@ uses a Raspberry Pi 3 Model B and an OpenCR board, which is an embedded ARM Cort
 Additionally, the robot is equipped with a 4 degree of freedom Interbotix PX100 robot arm which is
 controlled with servo motors and used for manipulation and grasping objects with the attached gripper.
 
-![The robot](/img/blog/2020-07-18-sample-collection-robot/rss_robot.jpg)
+![The robot](/img/blog/2020-06-18-sample-collection-robot/rss_robot.jpg)
 
 ## Software
 
@@ -51,7 +51,7 @@ navigating and manipulation.To run the robot, it just needs predefined:
 
 These tasks are distributed by the **high-level state machine** as per the diagram below:
 
-![Software architecture](/img/blog/2020-07-18-sample-collection-robot/rss_turtlebot_architecture.png)
+![Software architecture](/img/blog/2020-06-18-sample-collection-robot/rss_turtlebot_architecture.png)
 
 The **particle filter** uses the laser scans, 2D robot velocities, and the map to localize
 the robot with 250 particles running at 10Hz. The sensor model uses a likelihood field
@@ -76,7 +76,7 @@ the Eigen library for further optimizations. We are very proud of this and is be
 by the performance of the particle filter. Further, the whole stack is done using
 standard ROS messages and tools where possible, and we developed many data visualizations:
 
-![Data visualizations](/img/blog/2020-07-18-sample-collection-robot/rss-planning-2.png)
+![Data visualizations](/img/blog/2020-06-18-sample-collection-robot/rss-planning-2.png)
 
 In the picture above, you can see data from one of our experiments. Here is what
 all of the data is:
@@ -93,7 +93,7 @@ for the speed of our development and I would even say, we wouldn't have won with
 The Gazebo simulation is based on the open-source models for the Turtlebot 2
 and Interbotix PX100 robot arm:
 
-![Gazebo simulation](/img/blog/2020-07-18-sample-collection-robot/rss-simulation.png)
+![Gazebo simulation](/img/blog/2020-06-18-sample-collection-robot/rss-simulation.png)
 
 ## Further links
 
@@ -104,6 +104,6 @@ and goes into more technical detail.
 
 Finally, here is the robot in aciton:
 
-![Our robot in action](/img/blog/2020-07-18-sample-collection-robot/turtlebot.gif)
+![Our robot in action](/img/blog/2020-06-18-sample-collection-robot/turtlebot.gif)
 
 (don't mind the internet cable, the wifi broke that day)
