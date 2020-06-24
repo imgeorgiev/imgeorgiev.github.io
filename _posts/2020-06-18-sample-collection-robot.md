@@ -7,9 +7,9 @@ tags: [robotics, projects]
 ---
 
 For a course in university, I developed the software for a sample collection
-robot based. We developed a simple wheeled mobile robot tasked with navigating
+robot based on Turtlebot3 tasked with navigating
 autonomously around a known environment, interacting with objects and collecting
-rock samples with a robotic arm. More precisely, the robot is tasked to:
+rock samples with a robotic arm. More precisely, the robot was tasked to:
 
 * Navigating to a known button and pressing it.
 * Navigating to the boxes and clearing them away from the path. The box position is randomly
@@ -27,7 +27,7 @@ get the most marks in this practical.
 
 ## Robot
 
-The robotic platform supplied for this report was the Turtlebot3, which is a small and affordable
+The robotic platform we used was the Turtlebot3, which is a small and affordable
 differential drive robot. It is equipped with 2 DC Dynamixel XM430 motors, which can be
 controlled independently and provide accurate wheel odometry. Additionally, the robot is equipped
 with a 9-axis IMU, Raspberry Pi Camera, and an LDS-01 Lidar. For computation, the robot
@@ -39,7 +39,7 @@ controlled with servo motors and used for manipulation and grasping objects with
 
 ## Software
 
-The robot system has been designed to be generic and widely applicable to a variety of tasks involving
+The robot system was designed to be generic and widely applicable to a variety of tasks involving
 navigating and manipulation.To run the robot, it just needs predefined:
 
 * A discrete map of the environment
@@ -90,7 +90,7 @@ all of the data is:
 
 During the development of this, we also made a crucial Gazebo simulation
 for the speed of our development and I would even say, we wouldn't have won without it.
-The Gazebo simulation is based on the open-source models for the Turtlebot 2
+The Gazebo simulation is based on the open-source models for the Turtlebot3
 and Interbotix PX100 robot arm:
 
 ![Gazebo simulation](/img/blog/2020-06-18-sample-collection-robot/rss-simulation.png)

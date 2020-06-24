@@ -67,14 +67,13 @@ The vehicle state consists of kinematic and dynamic states.
 
 The dynamic states are estimated using the localization sensors the car is equipped with,
 allowing us to determine the velocities and accelerations. This is done using an Extended
-Kalman Filter (EKF) is fusing the data from the Wheel Odometry (WO), IMU, and GPS.
-This system should operate at the fastest sensor rate (200 Hz in our case).
+Kalman Filter (EKF) to fuse the data from the Wheel Odometry (WO), IMU, and GPS.
 
-For the kinematic states (position and orientation), we use the FastSLAM2 algorithm, which feeds of instantaneous cone locations from the perception pipeline and a prior position
+For the kinematic states (position and orientation), we use the FastSLAM2 algorithm, which
+feeds of instantaneous cone locations from the perception pipeline and a prior position
 estimate from the EKF. A continuous map is then built while the car is in Learning mode, and
-when it finishes the first lap, the SLAM should loop-close, correct any inaccuracies in the
-map and then localize only in racing mode. This should only output a position estimate
-, which then merged with the dynamic states giving the full state of the car.
+when it finishes the first lap, the SLAM loop-closes, correct any inaccuracies in the
+map and then only localizes in racing mode.
 
 ## Planning & Control
 
