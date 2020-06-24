@@ -112,7 +112,7 @@ Sadly, we never got to apply this as presented here to the real car due to bad
 timing with the COVID-19 pandemic. However, here is the data visualization
 of the whole stack in action in our simulation.
 
-![Data visualization](/img/blog/trackdrive.gif)
+![Data visualization](/img/blog/2020-06-19-formula-student/trackdrive.gif)
 
 ## My experience
 

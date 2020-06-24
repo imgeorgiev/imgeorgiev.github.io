@@ -30,7 +30,7 @@ get the most marks in this practical.
 The robotic platform supplied for this report was the Turtlebot3, which is a small and affordable
 differential drive robot. It is equipped with 2 DC Dynamixel XM430 motors, which can be
 controlled independently and provide accurate wheel odometry. Additionally, the robot is equipped
-with a 9-axis IMU, Raspberry Pi Camera, and an LDS-01 360\degree  Lidar. For computation, the robot
+with a 9-axis IMU, Raspberry Pi Camera, and an LDS-01 Lidar. For computation, the robot
 uses a Raspberry Pi 3 Model B and an OpenCR board, which is an embedded ARM Cortex M7 controller.
 Additionally, the robot is equipped with a 4 degree of freedom Interbotix PX100 robot arm which is
 controlled with servo motors and used for manipulation and grasping objects with the attached gripper.
