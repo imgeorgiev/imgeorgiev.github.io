@@ -12,7 +12,7 @@ navbar-links:
   Home: "/"
   Projects: "projects"
   About Me: "aboutme"
-  Resume: "files/Ignat-Georgiev-CV-2020.pdf"
+  Resume: "files/ignat_georgiev_resume.pdf"
 nav-search: "search"
 
 # --- Logo --- #
