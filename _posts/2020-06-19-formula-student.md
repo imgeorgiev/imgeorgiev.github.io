@@ -8,7 +8,9 @@ tags: [robotics, projects]
 
 For the majority of my time at University, I was with Edinburgh University Formula Student (EUFS), which is a student project competing in the prestigious [Formula Student](https://www.imeche.org/events/formula-student) competition. I have established the autonomous racecar student project within the team, aiming to compete in the brand new competition class - Formula Student Driverless. Through the last three years, I have led a passionate team of about 60 students to 2 victories in the UK competition and have raised a budget of over £70,000. This allowed me to obtain practical hands-on experience in the topics I am interested in as well as develop my **team working, management, leadership and communication skills**. Most of all, however, this has experienced has shaped me as a person and allowed me to discover my passion for Robotics and AI.
 
-![EUFS on the winners podium](/img/slider/eufs-ai-2.jpg)
+<p align="center">
+  <img src="http://imgeorgiev.com/img/slider/eufs-ai-2.jpg" />
+</p>
 
 ## The challenge
 
@@ -16,7 +18,9 @@ The main challenge of Formula Student is to develop the software for an autonomo
 that can drive 10 laps as fast as possible around any unknown race track. The track itself is
 signaled by color-coded cones on both sides of the track.
 
-![Formula Student track](https://clqtg10snjb14i85u49wifbv-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/Formula-Student-track.jpg)
+<p align="center">
+  <img src="https://clqtg10snjb14i85u49wifbv-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/Formula-Student-track.jpg" />
+</p>
 
 ## Technical overview
 
@@ -26,7 +30,9 @@ than what I have seen used in some big companies.
 
 The stack itself, revolves around the classical see-think-act mobile robot cycle:
 
-![See Think Act cycle](/img/blog/2020-06-19-formula-student/see-think-act.png)
+<p align="center">
+  <img src="http://imgeorgiev.com/img/blog/2020-06-19-formula-student/see-think-act.png" />
+</p>
 
 The car has two modes:
 
@@ -59,7 +65,9 @@ The Lidar pipeline is a multi-stage process where we first accumulate scans, app
 identify the ground plane and remove it, do some cluster filtering and then find objects using
 a grid-search algorithm.
 
-![Data visualization from one of our runs](/img/eufs.gif)
+<p align="center">
+  <img src="http://imgeorgiev.com/img/eufs.gif" />
+</p>
 
 ## Localisation
 
@@ -105,13 +113,15 @@ a headless simulation that has aided our development fundamentally.
 
 This is the resulting architecture diagram:
 
-![Overall architecture diagram](/img/blog/2020-06-19-formula-student/EUFS_soft_diagram_2020.png)
+<p align="center">
+  <img src="http://imgeorgiev.com/img/blog/2020-06-19-formula-student/EUFS_soft_diagram_2020.png" />
+</p>
 
 Sadly, we never got to apply this as presented here to the real car due to bad
 timing with the COVID-19 pandemic. However, here is the data visualization
 of the whole stack in action in our simulation.
 
-![Data visualization](/img/blog/2020-06-19-formula-student/trackdrive.gif)
+{% include youtubePlayer.html id="DtKp7FALTPA" %}
 
 ## My experience
 
