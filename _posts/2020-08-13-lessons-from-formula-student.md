@@ -2,7 +2,7 @@
 layout: post
 title: Lessons from Formula Student
 subtitle: Formula Student is not that only about building cars but also about building teams
-cover-img: /img/slider/eufs-ai-1.jpeg
+cover-img: /img/eufs-car.png
 tags: [projects]
 ---
 

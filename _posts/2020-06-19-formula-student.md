@@ -2,7 +2,7 @@
 layout: post
 title: Formula Student
 subtitle: My passion throughout university - I founded and led a student team to develop an autonomous racecar
-cover-img: /img/slider/eufs-ai-1.jpeg
+cover-img: /img/eufs-car.png
 tags: [robotics, projects]
 ---
 
