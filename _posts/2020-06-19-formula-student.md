@@ -20,7 +20,7 @@ that can drive 10 laps as fast as possible around any unknown race track. The tr
 signaled by color-coded cones on both sides of the track.
 
 <p align="center">
-  <img src="https://clqtg10snjb14i85u49wifbv-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/Formula-Student-track.jpg" />
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq1GUd1kbW_eZ6woCyRe9B6lpgjas6ajxHzw&usqp=CAU" />
 </p>
 
 ## Technical overview

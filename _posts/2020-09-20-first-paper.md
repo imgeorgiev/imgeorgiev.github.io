@@ -1,13 +1,13 @@
 ---
 layout: post
-title: My first paper
-subtitle: I got my first research paper accepted into an internal conference! 
+title: Iterative Semi-parametric Dynamics Model Learning For Autonomous Racing
+subtitle: First paper at CoRL 2020!
 image: /img/sim_crop.png
-tags: [robotics, updates]
+tags: [robotics, research]
 ---
 
-As a byproduct of my [Master's thesis](http://imgeorgiev.com/2020-06-06-dissertation) I have
-had my first paper accepted into the [Conference of Robot Learning 2020](https://www.robot-learning.org/).
+As a byproduct of my Master's thesis I have
+had my first paper accepted into the [Conference of Robot Learning (CoRL) 2020](https://www.robot-learning.org/).
 The paper is titled Iterative Semi-parametric Dynamics Model Learning For Autonomous Racing which
 is quite self-explanatory. You can [read it on arxiv](https://arxiv.org/abs/2011.08750). It was
 a big team-effort and I couldn't have done it without all the co-authors who helped me and
