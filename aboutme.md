@@ -6,9 +6,9 @@ css: "/css/aboutme.css"
 
 *last updated 06/01/2023*
 
-I am a PhD student at Georgia Tech, working in the intersection between machine learning and robotics. My deeply
+<!-- I am a PhD student at Georgia Tech, working in the intersection between machine learning and robotics. My deeply
 seeded belief is that these technologies have the potential to change the world for the better, and my mission is to
-bring intelligent star-wars-like robots one step closer to reality (minus the blasters).
+bring intelligent star-wars-like robots one step closer to reality (minus the blasters). -->
 
 ### Education
 I graduated **MSc AI & Robotics** at the University of Edinburgh in 2020 where I did my disseration on
