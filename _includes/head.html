@@ -148,30 +148,25 @@
 
   <script>
     MathJax = {
-      removeCode(math, doc) {
-        const code = math.start.node.parentNode;
-        if (code.nodeName === 'CODE' && code.childNodes.length === 1) {
-          const span = document.createElement('mjx-span');
-          code.parentNode.replaceChild(span, code);
-          span.appendChild(code.firstChild);
-        }
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
       },
       options: {
-        skipHtmlTags: { '[-]': ['code', 'pre'] },
-        renderActions: {
-          removeCode: [
-            11,
-            (doc) => { for (const math of MathJax.startup.document.math) MathJax.config.removeCode(math, doc) },
-            (math, doc) => MathJax.config.removeCode(math, doc),
-            false
-          ]
-        }
-      },
-      tex: {
-        inlineMath: [['$', '$'], ['`$', '$`'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['`$$', '$$`'], ['\\[', '\\]']]
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
       }
     };
+
+    window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function (x) {
+        x.parentElement.classList += 'has-jax'
+      })
+    });
+
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer id="MathJax-script"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
