@@ -147,21 +147,28 @@
   </script> -->
 
   <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    TeX: {
-      equationNumbers: { autoNumber: "AMS" },
-      tagSide: "right"
-    },
-    tex2jax: {
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-      inlineMath: [['$','$']],
-      displayMath: [['$$','$$'], ['\\[', '\\]']],
-      processEscapes: true,
-      processEnvironments: true
-    }
-  });
-</script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-    type="text/javascript"></script>
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ["script","noscript","style","textarea"],
+        inlineMath: [['$', '$'], ['`$', '$`'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['`$$', '$$`'], ['\\[', '\\]']]
+      }
+    });
+    MathJax.Hub.Register.LoadHook("[MathJax]/extensions/tex2jax.js", function () {
+      var TEX2JAX = MathJax.Extension.tex2jax;
+      TEX2JAX._createMathTag = TEX2JAX.createMathTag;
+      TEX2JAX.createMathTag = function (mode, tex) {
+        const math = this._createMathTag(mode, tex);
+        const code = math.parentNode;
+        if (code.nodeName === 'CODE' && code.childNodes.length <= 3) {
+          const span = document.createElement('mjx-span');
+          code.parentNode.replaceChild(span, code);
+          span.appendChild(math);
+        }
+        return math;
+      };
+    });
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML" defer></script>
 
 </head>
