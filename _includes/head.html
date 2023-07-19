@@ -146,29 +146,32 @@
     });
   </script> -->
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ["script","noscript","style","textarea"],
+  <script>
+    MathJax = {
+      removeCode(math, doc) {
+        const code = math.start.node.parentNode;
+        if (code.nodeName === 'CODE' && code.childNodes.length === 1) {
+          const span = document.createElement('mjx-span');
+          code.parentNode.replaceChild(span, code);
+          span.appendChild(code.firstChild);
+        }
+      },
+      options: {
+        skipHtmlTags: { '[-]': ['code', 'pre'] },
+        renderActions: {
+          removeCode: [
+            11,
+            (doc) => { for (const math of MathJax.startup.document.math) MathJax.config.removeCode(math, doc) },
+            (math, doc) => MathJax.config.removeCode(math, doc),
+            false
+          ]
+        }
+      },
+      tex: {
         inlineMath: [['$', '$'], ['`$', '$`'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['`$$', '$$`'], ['\\[', '\\]']]
       }
-    });
-    MathJax.Hub.Register.LoadHook("[MathJax]/extensions/tex2jax.js", function () {
-      var TEX2JAX = MathJax.Extension.tex2jax;
-      TEX2JAX._createMathTag = TEX2JAX.createMathTag;
-      TEX2JAX.createMathTag = function (mode, tex) {
-        const math = this._createMathTag(mode, tex);
-        const code = math.parentNode;
-        if (code.nodeName === 'CODE' && code.childNodes.length <= 3) {
-          const span = document.createElement('mjx-span');
-          code.parentNode.replaceChild(span, code);
-          span.appendChild(math);
-        }
-        return math;
-      };
-    });
-    </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML" defer></script>
-
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer id="MathJax-script"></script>
 </head>
