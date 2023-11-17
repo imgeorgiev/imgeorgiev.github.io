@@ -12,6 +12,7 @@ navbar-links:
   Blog: "/"
   Projects: "projects"
   About Me: "aboutme"
+  Resume: "/files/ignat_georgiev_resume.pdf"
   List 100: "100"
 nav-search: "search"
 
