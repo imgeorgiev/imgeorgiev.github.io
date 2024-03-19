@@ -2,7 +2,7 @@
 layout: post
 title: What makes RL tick?
 subtitle: Explring one of the less appreciated parts of RL
-image: /img/blog/2023-11-16-mbrl/robot-planning.png
+image: /img/blog/2024-03-15-stochastic-rl/robot_math.webp
 bibliography: papers.bib
 tags: [robotics, research, long]
 header-includes:
@@ -100,7 +100,7 @@ That quickly becomes intractable for any reasonable problem. Can we make do with
 
 <a id="mc_estimate"></a>
 
-$$ \label{eq:monte-carlo} \begin{equation} \bar{\nabla}_\theta^{[\cdot]} J(\theta) = \dfrac{1}{N} \sum_{n=1}^N \hat{\nabla}_\theta^{[\cdot]} J(\theta)^{(n)} \end{equation} $$
+$$ \begin{equation} \bar{\nabla}_\theta^{[\cdot]} J(\theta) = \dfrac{1}{N} \sum_{n=1}^N \hat{\nabla}_\theta^{[\cdot]} J(\theta)^{(n)} \end{equation} $$
 
 Note how I didn't use the $[0]$ to indicate PGs. That is because I want to introduce another gradient type:
 
@@ -115,7 +115,7 @@ These types of gradients:
 
 We now have 2 different types of gradients. How do we choose which one to use? There are a couple key properties we look for [1]:
 
-* **Consistency.** As we increase the number of samples $N$ in Equation \ref{eq:monte-carlo}, the gradient estimate should converge to the true gradient $$\bar{\nabla}_\theta J(\theta) \rightarrow \nabla_\theta J(\theta)$$ as $$N \rightarrow \infty$$. Both PG and FOG are consistent gradient estimators as proven by the Law of Large Numbers [2].
+* **Consistency.** As we increase the number of samples $N$ in [Eq. 3](#mc_estimate), the gradient estimate should converge to the true gradient $$\bar{\nabla}_\theta J(\theta) \rightarrow \nabla_\theta J(\theta)$$ as $$N \rightarrow \infty$$. Both PG and FOG are consistent gradient estimators as proven by the Law of Large Numbers [2].
 * **Computational efficiency.** Ultimately, we are interested in obtaining the best gradient estimates in a unit of wall-clock time. This can materialize as using fewer MC samples, scalability to parameter dimensionality $d$, the unit cost of computing gradients, or computations that can be easily parallelized. This topic is ultimately empirical and out the scope of this blog.
 * **Bias.** If we repeat the estimation process many times, will our estimates be centered on the true value of the gradient? In other words, what is the accuracy of the gradient estimates for varying $N$.
 * **Variance.** Any estimator using [Eq. 3](#mc_estimate) is a random variable. All other things being equal, we always prefer an estimator with lower variance as it enables more efficient learning.
