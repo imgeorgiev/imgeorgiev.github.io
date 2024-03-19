@@ -68,7 +68,7 @@ Given a finite-horizon problem with state space $s_t \in \mathcal{S}$, actions $
 
 $$ \begin{equation} J(\theta) = \mathbb{E}_{\substack{  a_t \sim \pi_\theta(\cdot | s_t)}} \big[ \sum_{t=0}^T r(s_t, a_t) \big] \end{equation} $$
 
-where $\pi_\theta (\cdot | s_t)$ is our stochastic action policy which we use to introduce noise into our problem.
+where $\pi_\theta (\cdot \| s_t)$ is our stochastic action policy which we use to introduce noise into our problem.
 
 <details>
 <summary>Notes on formulation</summary>
@@ -84,7 +84,7 @@ How can we solve this? i.e. $\max_\theta J(\theta)$. The most common way to do t
 $$ \begin{equation} \nabla_\theta^{[0]} J(\theta) = \mathbb{E}_{ a_t \sim \pi_\theta(\cdot | s_t)} \bigg[ \bigg(\sum_{t=0}^H r(s_t, a_t) \bigg) \bigg(\sum_{t=0}^H \nabla_\theta \log \pi_\theta (a_t | s_t) \bigg) \bigg] \end{equation}$$
 
 * Doesn't require us to know the $f(s,a)$, nor $r(s,a)$. We just need to be able to sample from them!
-* Only need to know $\pi_\theta(a_t| s_t)$ and for it to bo continuously differentiable.
+* Only need to know $\pi_\theta(a_t \| s_t)$ and for it to bo continuously differentiable.
 * Sample inefficient and has high variance. 
 * Only holds with expectation.
 
@@ -100,7 +100,7 @@ That quickly becomes intractable for any reasonable problem. Can we make do with
 
 <a id="mc_estimate"></a>
 
-$$ \begin{equation} \bar{\nabla}_\theta^{[\cdot]} J(\theta) = \dfrac{1}{N} \sum_{n=1}^N \hat{\nabla}_\theta^{[\cdot]} J(\theta)^{(n)} \end{equation} $$
+$$ \label{eq:monte-carlo} \begin{equation} \bar{\nabla}_\theta^{[\cdot]} J(\theta) = \dfrac{1}{N} \sum_{n=1}^N \hat{\nabla}_\theta^{[\cdot]} J(\theta)^{(n)} \end{equation} $$
 
 Note how I didn't use the $[0]$ to indicate PGs. That is because I want to introduce another gradient type:
 
@@ -110,7 +110,7 @@ $$ \begin{equation} \nabla_{\theta}^{[1]} J(\theta) := \mathbb{E}_{a_h \sim \pi_
 
 These types of gradients:
 
-* Assume known and differentiable $f(s,a), r(s,a), \pi(\cdot | s)$
+* Assume known and differentiable $f(s,a), r(s,a), \pi(\cdot \| s)$
 * Are known to have less variance thus be more sample efficient [1]
 
 We now have 2 different types of gradients. How do we choose which one to use? There are a couple key properties we look for [1]:
@@ -123,17 +123,19 @@ We now have 2 different types of gradients. How do we choose which one to use? T
 
 Let's first handle the topic of bias which we can say a lot of things theoretically!
 
-**Assumption 1:**     To ensure $\nabla J(\theta)$ is well defined, we assume that the policy $\pi_\theta ( \cdot | s)$ is continuously differentiable $\forall s \in \R^n, \forall \theta \in \R^d$. Furthermore, the system dynamics $f$ and reward $r$ have polynomial growth.
+**Assumption 1:** To ensure $\nabla J(\theta)$ is well defined, we assume that the policy $\pi_\theta ( \cdot \| s)$ is continuously differentiable $\forall s \in \R^n, \forall \theta \in \R^d$. Furthermore, the system dynamics $f$ and reward $r$ have polynomial growth.
 
 
 **Lemma 1:** Under Assumption 1, PG is an unbiased gradient estimator of the stochastic objective [3]:
+
 $$ \begin{equation}
         \mathbb{E} \big[ \bar{\nabla}^{[0]} J(\theta) \big] = \nabla J(\theta)
     \end{equation} $$
 
-**Assumption 2:** The system dynamics $f(s, a)$ and the reward $r(s, a)$ are continuously differentiable $\forall s \in \R^n, \forall a \in \R^m$.
+**Assumption 2:** The system dynamics $f(s, a)$ and the reward $r(s, a)$ are continuously differentiable $\forall s \in \mathbb{R}^n, \forall a \in \mathbb{R}^m$.
 
 **Lemma 2:** Under Assumptionsm 1 and 2 and if $f(s, a)$ and $r(s, a)$ are Lipschitz smooth, then FOG are almost surely defined and unbiased [3]:
+
 $$\begin{equation}
          \mathbb{E} \big[ \bar{\nabla}^{[1]} J(\theta) \big] = \nabla J(\theta)
     \end{equation}$$
@@ -203,25 +205,31 @@ $$
 We can also do some theoretical analysis on these results:
 
 **Lemma 3:** If the policy $\pi$ is $B_\pi$-Lipshitz, then PG variance can be bounded by:
+
 $$
 \begin{align}
  \mathbb{V} \big[ {\bar{\nabla}^{[0]} J(\theta)} \big] = \dfrac{1}{N} \mathbb{V} \big[ {\hat{\nabla}^{[0]}J_i(\theta)} \big] \leq \dfrac{1}{N \sigma^2} B^2_\pi n
 \end{align}
 $$
+
 Most importantly, the variance of PG estimates is not bounded by the objective function. PG exhibit the same variance when applied to either smooth and non-smooth objective functions. Proof can be found in [3].
 
 **Lemma 4:**
 If the policy $\pi$ is $B_\pi$-Lipshitz, the reward $r(\cdot, \cdot)$ is $B_r$-Lipshitz and the dynamics $f(\cdot, \cdot)$ are $B_f$-Lipshitz, then the variance of FOG can be bounded by:
+
 $$
 \mathbb{V} \big[ {\bar{\nabla}^{[1]} J(\theta)} \big] = \dfrac{1}{N} \mathbb{V} \big[ {\hat{\nabla}^{[1]}J_i(\theta)} \big] \leq \dfrac{1}{N\sigma^2} B_r^2 B_\pi^2 B_f^2 m
 $$
+
 Unlike PG, these types of gradients are bounded by the smoothness of the objective function expressed via $B_\pi$ and $B_f$. Crucially, the less smooth our objective is, the higher the variance. Proof can be found in in [4].
 
 **Lemma 5:**
-For a stochastic optimization problem under Assumption 1, which also has $B_\pi$-Lipshitz smooth policy $\pi$ and Lipshitz-smooth and bounded rewards $r(s, a) \leq ||\nabla r(s, a)|| \leq B_r$ $\forall s \in \R^n; a \in \R^m; theta \in \R^d$, then PGs remain consistently unbiased. However, FOGs exhibit bias bounded by:
+For a stochastic optimization problem under Assumption 1, which also has $B_\pi$-Lipshitz smooth policy $\pi$ and Lipshitz-smooth and bounded rewards $r(s, a) \leq ||\nabla r(s, a)|| \leq B_r$ $\forall s \in \mathbb{R}^n; a \in \mathbb{R}^m; theta \in \mathbb{R}^d$, then PGs remain consistently unbiased. However, FOGs exhibit bias bounded by:
+
 $$
 \| \mathbb{E} \big[ {\nabla_\theta^{[1]} J(\theta)} \big] - \mathbb{E} \big[ {\nabla_\theta^{[0]} J(\theta)} \big] \| \leq B_r^2 B_\pi^2 \mathbb{E} \big[ \| \nabla f(s, a) \|^2  \big]
 $$
+
 $B_r$ can be bounded via reward engineering. $B_\pi$ can be bounded by engineering a nice policy. However, the dynamics are more difficult to bound as they are naturally discontinous. Not great for FOGs. We call this empirical bias of FOGs! Proof can be found in [4].
 
 
