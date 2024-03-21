@@ -252,4 +252,11 @@ Thank you for making it this far. I hope that you learned something!
 
 If you have any comments or suggestions, [shoot me an email](mailto:ignat@imgeorgiev.com)!
 
+# References
+
+* [1] [Mnih et al., Monte Carlo Gradient Estimation in Machine Learning](https://arxiv.org/abs/1906.10652) 
+* [2] [Robert et al., Monte Carlo statistical methods](https://mcube.lab.nycu.edu.tw/~cfung/docs/books/robert2004monte_carlo_statistical_methods.pdf)
+* [3] [Suh et al., Do Differentiable Simulators Give Better Policy Gradients?](https://arxiv.org/abs/2202.00817)
+* [4] [Georgiev et al., Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation](https://adaptive-horizon-actor-critic.github.io/)
+
 
