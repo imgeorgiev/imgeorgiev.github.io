@@ -9,8 +9,7 @@ description: Robot Learning Researcher
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  Blog: "/"
-  Projects: "projects"
+  Home: "/"
   About Me: "aboutme"
   Resume: "/files/ignat_georgiev_resume.pdf"
   List 100: "100"
@@ -53,10 +52,10 @@ social-network-links:
   facebook: imgeorgiev
   github: imgeorgiev
   gitlab: imgeorgiev
-  #  twitter: blank
+  twitter: imgeorgiev
   #  reddit: blank
   #  google-plus: +DeanAttali
-  # linkedin: imgeorgiev
+  linkedin: imgeorgiev
 #  xing: yourname
 #  stackoverflow: "9819486/imgeorgiev"
 #  snapchat: deanat78
