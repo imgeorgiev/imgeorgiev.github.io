@@ -10,6 +10,8 @@ css: "/css/aboutme.css"
 seeded belief is that these technologies have the potential to change the world for the better, and my mission is to
 bring intelligent star-wars-like robots one step closer to reality (minus the blasters). -->
 
+![](/assets/img/business.jpg)
+
 ### Education
 I graduated **MSc AI & Robotics** at the University of Edinburgh in 2020 where I did my disseration on
 **Adaptive Motion Control for Autonomous Racing** with [Michael Mistry](https://www.edinburgh-robotics.org/academics/michael-mistry). Throughout my time in Edinburgh, I also established the [driverless branch of Edinburgh University Formula Student (EUFS)](/2020-06-19-formula-student/) where we build autonomous racecars.
