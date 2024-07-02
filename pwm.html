@@ -227,13 +227,16 @@ datacampcourse: true
                 <div class="column is-four-fifths">
                     <h2 class="title is-3">Method overview</h2>
                     <div class="columns is-vcentered  is-centered">
-                        <video src="media/wm-animation.mp4" autoplay muted loop></video>
+                        <video src="https://policy-world-model.github.io/media/wm-animation.mp4" autoplay muted
+                            loop></video>
                     </div>
                     <br>
-                    Instead of building world models into algorithms, we propose using large-scale multi-task world
-                    models as differentiable simulators for policy learning. When well-regularized, these models enable
-                    efficient policy learning with first-order gradient optimization. This allows PWM to learn to solve
-                    80 tasks in < 10 minutes each without the need for expensive online planning. </h2>
+                    we introduce Policy learning with large World Models (PWM), a novel Model-Based RL (MBRL) algorithm
+                    and framework aimed at deriving effective continuous control policies from large, multi-task world
+                    models. We utilize pre-trained TD-MPC2 world models to efficiently learn control policies with FoG
+                    in &lt; 10m per task. Our empirical evaluations on complex locomotion tasks indicate that PWM not
+                    only achieves higher reward than baselines but also outperforms methods that use ground-truth
+                    simulation dynamics. </h2>
                 </div>
             </div>
     </section>
@@ -250,7 +253,8 @@ datacampcourse: true
                     not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a
                     method using the dynamics and reward function of the simulator directly. In an 80-task setting
                     <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
-                    outperform TDMPC2, an MBRL method that uses the same world model but plans for actions online.
+                    outperform TD-MPC2, an MBRL method that uses the same world model, without the need for online
+                    planning.
                 </div>
             </div>
         </div>
@@ -263,7 +267,7 @@ datacampcourse: true
                     <h2 class="title is-3"><span class="dperact">Single-task results</span></h2>
                     <div class="columns is-centered">
                         <video id="dflex" autoplay muted loop playsinline style="height: auto;">
-                            <source src="media/dflex.mp4" type="video/mp4">
+                            <source src="https://policy-world-model.github.io/media/dflex.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="columns is-centered">
@@ -273,7 +277,7 @@ datacampcourse: true
                     <p>
                         The figure shows 50% IQM with solid lines, mean with dashed lines, and 95% CI over all 5 tasks
                         and 5 random seeds. PWM is able to achieve a higher reward than model-free baselines PPO and
-                        SAC, TDMPC2, which uses the same world model as PWM and SHAC which uses the ground-truth
+                        SAC, TD-MPC2, which uses the same world model as PWM and SHAC which uses the ground-truth
                         dynamics and reward functions of the simulator. These results indicate that well-regularized
                         world models can smooth out the optimization landscape, allowing for better first-order gradient
                         optimization.
@@ -326,8 +330,8 @@ datacampcourse: true
                             alt="Full multi-task results" class="column is-two-thirds" />
                     </div>
                     <p>
-                        The figure shows the performance of PWM and TDMPC2 on 30 and 80 multi-task benchmarks with
-                        results over 10 random seeds. PWM is able to outperform TDMPC2 while using the same world model
+                        The figure shows the performance of PWM and TD-MPC2 on 30 and 80 multi-task benchmarks with
+                        results over 10 random seeds. PWM is able to outperform TD-MPC2 while using the same world model
                         without any form of online planning, making it the more scalable approach to large world models.
                         The right figure compares PWM, a multi-task policy, with single-task experts SAC and DreamerV3.
                         It is impressive that PWM is able to match their performance while being multi-task and only
