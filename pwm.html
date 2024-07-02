@@ -64,18 +64,6 @@ datacampcourse: true
 
     </script>
 
-    <!-- Automatically adjust video bottom padding -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var video = document.getElementById('myVideo');
-            video.addEventListener('loadedmetadata', function () {
-                var aspectRatio = (video.videoHeight / video.videoWidth) * 100;
-                var videoContainer = video.parentElement;
-                videoContainer.style.paddingBottom = aspectRatio + '%';
-            });
-        });
-    </script>
-
     <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
     <link rel="stylesheet" href="./css/fontawesome.all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -238,9 +226,8 @@ datacampcourse: true
             <div class="columns is-centered has-text-centered">
                 <div class="column is-four-fifths">
                     <h2 class="title is-3">Method overview</h2>
-                    <div class="video-container">
-                        <video src="https://policy-world-model.github.io/media/wm-animation.mp4" autoplay muted
-                            loop></video>
+                    <div class="columns is-vcentered  is-centered">
+                        <video src="media/wm-animation.mp4" autoplay muted loop></video>
                     </div>
                     <br>
                     Instead of building world models into algorithms, we propose using large-scale multi-task world
@@ -255,7 +242,7 @@ datacampcourse: true
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-two-thirds">
-                    <div class="columns is-centered">
+                    <div class="columns is-centered has-text-centered">
                         <img src="https://policy-world-model.github.io/media/teaser_results.png"
                             alt="PWM teaser results" />
                     </div>
@@ -274,9 +261,9 @@ datacampcourse: true
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
                     <h2 class="title is-3"><span class="dperact">Single-task results</span></h2>
-                    <div class="video-container">
-                        <video id="dflex" autoplay muted loop>
-                            <source src="https://policy-world-model.github.io/media/dflex.mp4" type="video/mp4">
+                    <div class="columns is-centered">
+                        <video id="dflex" autoplay muted loop playsinline style="height: auto;">
+                            <source src="media/dflex.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="columns is-centered">
