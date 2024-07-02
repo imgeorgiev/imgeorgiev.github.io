@@ -175,7 +175,6 @@ datacampcourse: true
                                         <span>Code</span>
                                     </a>
                                 </span>
-
                             </div>
                         </div>
                     </div>
@@ -225,10 +224,10 @@ datacampcourse: true
             <div class="columns is-centered has-text-centered">
                 <div class="column is-four-fifths">
                     <h2 class="title is-3">Method overview</h2>
-                    <div class="columns is-vcentered  is-centered">
-                        <video src="https://policy-world-model.github.io/media/wm-animation.mp4" autoplay muted
-                            loop></video>
-                    </div>
+                    <!-- <div class="columns is-vcentered  is-centered"> -->
+                    <video src="https://policy-world-model.github.io/media/wm-animation.mp4" autoplay muted
+                        loop></video>
+                    <!-- </div> -->
                     <br>
                     Instead of building world models into algorithms, we propose using large-scale multi-task world
                     models as differentiable simulators for policy learning. When well-regularized, these models enable
@@ -239,21 +238,20 @@ datacampcourse: true
     </section>
 
     <section class="section">
-        <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-                <div class="column is-two-thirds">
-                    <div class="columns is-vcentered  is-centered">
-                        <img src="https://policy-world-model.github.io/media/teaser_results.png"
-                            alt="PWM teaser results" />
-                    </div>
-                    We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
-                    not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a
-                    method using the dynamics and reward function of the simulator directly. In an 80-task setting
-                    <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
-                    outperform TDMPC2, an MBRL method that uses the same world model but plans for actions online.
+        <!-- <div class="container is-max-desktop"> -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-two-thirds">
+                <div class="columns is-vcentered  is-centered">
+                    <img src="https://policy-world-model.github.io/media/teaser_results.png" alt="PWM teaser results" />
                 </div>
+                We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
+                not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a
+                method using the dynamics and reward function of the simulator directly. In an 80-task setting
+                <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
+                outperform TDMPC2, an MBRL method that uses the same world model but plans for actions online.
             </div>
         </div>
+        <!-- </div> -->
     </section>
 
     <section class="section">
