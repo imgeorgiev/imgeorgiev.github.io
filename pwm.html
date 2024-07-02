@@ -219,13 +219,15 @@ datacampcourse: true
 
     <!-- Paper video. -->
     <section class="section">
-        <div class="columns is-centered has-text-centered">
-            <div class="column is-two-thirds">
-                <h2 class="title is-3">Video</h2>
-                <div class="publication-video">
-                    <iframe
-                        src="https://www.youtube.com/embed/RulQmghf6BI?modestbranding=1&autohide=1&showinfo=0&controls=1"
-                        frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-two-thirds">
+                    <h2 class="title is-3">Video</h2>
+                    <div class="publication-video">
+                        <iframe
+                            src="https://www.youtube.com/embed/RulQmghf6BI?modestbranding=1&autohide=1&showinfo=0&controls=1"
+                            frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -250,16 +252,19 @@ datacampcourse: true
     </section>
 
     <section class="section">
-        <div class="columns is-centered has-text-centered">
-            <div class="column is-two-thirds">
-                <div class="columns is-centered">
-                    <img src="https://policy-world-model.github.io/media/teaser_results.png" alt="PWM teaser results" />
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-two-thirds">
+                    <div class="columns is-centered">
+                        <img src="https://policy-world-model.github.io/media/teaser_results.png"
+                            alt="PWM teaser results" />
+                    </div>
+                    We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
+                    not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a
+                    method using the dynamics and reward function of the simulator directly. In an 80-task setting
+                    <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
+                    outperform TDMPC2, an MBRL method that uses the same world model but plans for actions online.
                 </div>
-                We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
-                not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a
-                method using the dynamics and reward function of the simulator directly. In an 80-task setting
-                <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
-                outperform TDMPC2, an MBRL method that uses the same world model but plans for actions online.
             </div>
         </div>
     </section>
