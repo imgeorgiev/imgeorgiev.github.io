@@ -29,42 +29,6 @@ datacampcourse: true
   <!-- End Google Tag Manager -->
 
   <script>
-    function updateSingleVideo() {
-      var demo = document.getElementById("single-menu-demos").value;
-      var task = document.getElementById("single-menu-tasks").value;
-      var inst = document.getElementById("single-menu-instances").value;
-
-      console.log("single", demo, task, inst)
-
-      var video = document.getElementById("multi-task-result-video");
-      video.src = "media/results/sim_rollouts/" +
-        "n" +
-        demo +
-        "-" +
-        task +
-        "-" +
-        inst +
-        ".mp4"
-      video.playbackRate = 1.75;
-      video.play();
-    }
-
-    function updateQpredVideo() {
-      var task = document.getElementById("single-menu-qpred").value;
-
-      console.log("qpred", task)
-
-      var video = document.getElementById("q-pred-video");
-      video.src = "media/results/qpred/" +
-        task +
-        ".mp4"
-      video.playbackRate = 1.75;
-      video.play();
-    }
-
-  </script>
-
-  <script>
     document.addEventListener('DOMContentLoaded', function () {
       var video = document.getElementById('myVideo');
       video.addEventListener('loadedmetadata', function () {
@@ -76,21 +40,16 @@ datacampcourse: true
   </script>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="./static/css/bulma.min.css"> -->
-  <!-- <link rel="stylesheet" href="./static/css/bulma-carousel.min.css"> -->
-  <!-- <link rel="stylesheet" href="./static/css/bulma-slider.min.css"> -->
   <link rel="stylesheet" href="./css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <!-- <script src="./static/js/bulma-carousel.min.js"></script> -->
-  <!-- <script src="./static/js/bulma-slider.min.js"></script> -->
   <script src="./static/js/index.js"></script>
 </head>
 
-<body onload="updateSingleVideo(); updateQpredVideo();">
+<body>
 
 
   <section class="hero">
@@ -245,7 +204,7 @@ datacampcourse: true
           <h2 class="title is-3">Method overview</h2>
           <div class="video-container">
             <video id="wm-animation" autoplay muted loop playsinline>
-              <source src="https://policy-world-model.github.io/media/wm-animation.mp4" type="video/mp4">
+              <source src="/img/pwm/wm-animation.mp4" type="video/mp4">
             </video>
           </div>
 
@@ -266,7 +225,7 @@ datacampcourse: true
         <div class="column is-two-thirds">
           <div class="columns is-centered is-vcentered">
             <div class="column is-narrow">
-              <img src="https://policy-world-model.github.io/media/teaser_results.png" alt="PWM teaser results" />
+              <img src="/img/pwm/teaser_results.png" alt="PWM teaser results" />
             </div>
           </div>
           <p>
@@ -291,14 +250,13 @@ datacampcourse: true
           <h2 class="title is-3"><span class="dperact">Single-task results</span></h2>
           <div class="video-container" style="padding-top: 14%;">
             <video id="dflex" autoplay muted loop playsinline>
-              <source src="https://policy-world-model.github.io/media/dflex.mp4" type="video/mp4">
+              <source src="/img/pwm/dflex.mp4" type="video/mp4">
             </video>
           </div>
           <br>
           <div class="columns is-centered is-vcentered">
             <div class="column is-narrow">
-              <img src="https://policy-world-model.github.io/media/dflex_results_agg.png" alt="agg results"
-                class="column is-two-thirds" />
+              <img src="/img/pwm/dflex_results_agg.png" alt="agg results" class="column is-two-thirds" />
             </div>
           </div>
           <p>
@@ -320,32 +278,31 @@ datacampcourse: true
         <div class="column is-full">
           <h2 class="title is-3"><span class="dperact">Multi-task results</span></h2>
           <div class="media-grid">
-            <video src="https://policy-world-model.github.io/media/pwm-videos/dmcontrol-formatted/fish-swim.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/metaworld-formatted/mw-coffee-button.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/dmcontrol-formatted/cheetah-run-back.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/metaworld-formatted/mw-drawer-close.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/dmcontrol-formatted/walker-run.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/metaworld-formatted/mw-hammer.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video
-              src="https://policy-world-model.github.io/media/pwm-videos/dmcontrol-formatted/walker-walk-backwards.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/metaworld-formatted/mw-push-wall.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/dmcontrol-formatted/walker-walk.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
-            <video src="https://policy-world-model.github.io/media/pwm-videos/metaworld-formatted/mw-lever-pull.mp4"
-              width="128" height="128" autoplay muted loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/dmcontrol-formatted/fish-swim.mp4" width="128" height="128" autoplay muted
+              loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/metaworld-formatted/mw-coffee-button.mp4" width="128" height="128" autoplay
+              muted loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/dmcontrol-formatted/cheetah-run-back.mp4" width="128" height="128" autoplay
+              muted loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/metaworld-formatted/mw-drawer-close.mp4" width="128" height="128" autoplay
+              muted loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/dmcontrol-formatted/walker-run.mp4" width="128" height="128" autoplay muted
+              loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/metaworld-formatted/mw-hammer.mp4" width="128" height="128" autoplay muted
+              loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/dmcontrol-formatted/walker-walk-backwards.mp4" width="128" height="128"
+              autoplay muted loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/metaworld-formatted/mw-push-wall.mp4" width="128" height="128" autoplay
+              muted loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/dmcontrol-formatted/walker-walk.mp4" width="128" height="128" autoplay muted
+              loop style="height: auto;"></video>
+            <video src="/img/pwm/pwm-videos/metaworld-formatted/mw-lever-pull.mp4" width="128" height="128" autoplay
+              muted loop style="height: auto;"></video>
             <!-- Repeat for all media -->
           </div>
           <div class="columns is-centered is-vcentered">
             <div class="column is-narrow">
-              <img src="https://policy-world-model.github.io/media/mutlitask_full.png" alt="Full multi-task results" />
+              <img src="/img/pwm/mutlitask_full.png" alt="Full multi-task results" />
             </div>
           </div>
           <p>
