@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="PWM: Policy Learning with Large World Models">
+    <meta name="keywords" content="Reinforcement Learning, Robot Control, World Models">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PWM</title>
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5VSL39R9');</script>
+    <!-- End Google Tag Manager -->
+
+    <script>
+        function updateSingleVideo() {
+            var demo = document.getElementById("single-menu-demos").value;
+            var task = document.getElementById("single-menu-tasks").value;
+            var inst = document.getElementById("single-menu-instances").value;
+
+            console.log("single", demo, task, inst)
+
+            var video = document.getElementById("multi-task-result-video");
+            video.src = "media/results/sim_rollouts/" +
+                "n" +
+                demo +
+                "-" +
+                task +
+                "-" +
+                inst +
+                ".mp4"
+            video.playbackRate = 1.75;
+            video.play();
+        }
+
+        function updateQpredVideo() {
+            var task = document.getElementById("single-menu-qpred").value;
+
+            console.log("qpred", task)
+
+            var video = document.getElementById("q-pred-video");
+            video.src = "media/results/qpred/" +
+                task +
+                ".mp4"
+            video.playbackRate = 1.75;
+            video.play();
+        }
+
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="./static/css/bulma.min.css"> -->
+    <!-- <link rel="stylesheet" href="./static/css/bulma-carousel.min.css"> -->
+    <!-- <link rel="stylesheet" href="./static/css/bulma-slider.min.css"> -->
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/pwm.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script defer src="./static/js/fontawesome.all.min.js"></script> -->
+    <!-- <script src="./static/js/bulma-carousel.min.js"></script> -->
+    <!-- <script src="./static/js/bulma-slider.min.js"></script> -->
+    <script src="./static/js/pwm.js"></script>
+</head>
+
+<body onload="updateSingleVideo(); updateQpredVideo();">
+
+    <!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" target="_blank" href="https://mohitshridhar.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" href="https://cliport.github.io">
+            CLIPort
+          </a>
+          <a class="navbar-item" target="_blank" href="https://askforalfred.com/">
+            ALFRED
+          </a>
+          <a class="navbar-item" target="_blank" href="http://alfworld.github.io/">
+            ALFWorld
+          </a>
+          <a class="navbar-item" target="_blank" href="https://arxiv.org/pdf/1806.03831.pdf">
+            INGRESS
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title">PWM: Policy Learning with Large World Models</h1>
+                        <h3 class="title is-4 conference-authors"><a target="_blank"
+                                href="https://www.robot-learning.org/">NeurIPS
+                                2024 Submission</a></h3>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                Authors hidden while paper is under review.
+                                <!-- <span class="author-block">
+                <a target="_blank" href="https://mohitshridhar.com/">Mohit Shridhar</a><sup>1</sup>,</span> -->
+                                <!-- <span class="author-block">
+                <a target="_blank" href="http://lucasmanuelli.com/">Lucas Manuelli</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://homes.cs.washington.edu/~fox/">Dieter Fox</a><sup>1, 2</sup>
+              </span> -->
+                        </div>
+
+                        <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Washington,</span>
+              <span class="author-block"><sup>2</sup>NVIDIA</span>
+            </div> -->
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <!-- PDF Link. -->
+                                <span class="link-block">
+                                    <a target="_blank" href="https://openreview.net/forum?id=VQOoHBRbpC"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </span>
+                                        <span>Paper</span>
+                                    </a>
+                                </span>
+
+                                <!-- Arxiv Link. -->
+                                <!-- <span class="link-block">
+                  <a target="_blank" href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file"></i>
+                    </span>
+                    <span>ArXiv</span>
+                  </a>
+                </span> -->
+
+                                <!-- Video Link. -->
+                                <!-- <span class="link-block">
+                  <a target="_blank" href="https://youtu.be/Pa7tNjtK9w0"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+
+                                <!-- Talk Link.
+                <span class="link-block">
+                  <a target="_blank" href="https://youtu.be/QcuXwmQgurE"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-chalkboard-teacher"></i>
+                    </span>
+                    <span>Talk</span>
+                  </a>
+                </span> -->
+
+
+                                <!-- Colab Link. -->
+                                <!-- <span class="link-block">
+                  <a target="_blank"
+                    href="https://colab.research.google.com/drive/1HAqemP4cE81SQ6QO1-N85j5bF4C0qLs0?usp=sharing"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fa fa-book" aria-hidden="true"></i>
+                    </span>
+                    <span>Colab</span>
+                  </a>
+                </span> -->
+
+                                <!-- Code Link. -->
+                                <span class="link-block">
+                                    <a target="_blank" href="https://anonymous.4open.science/r/FoWM-1F48/README.md"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code (Anonymized)</span>
+                                    </a>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline height="100%">
+          <source src="media/all_envs_trimmed.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Adaptive Horizon Actor Critic (AHAC) is a First-Order Model-Based Reinforcement Learning algorithm
+          that achieves 40% more asymptotic reward than Model-Free approaches across a set of locomotion tasks
+          while being 1000x more sample efficient and more scalable to high-dimensional tasks.
+        </h2>
+      </div>
+    </div>
+  </section> -->
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        We propose Policy learning through World Models (PWM), a novel model-based Reinforcement
+                        Learning (RL)
+                        algorithm for learning continuous control policies from large multi-task world models. Instead
+                        of treating
+                        world models as components of methods, we suggest using them as generalist differentiable
+                        physics
+                        simulators, which allows for efficient policy training using first-order gradients. We
+                        demonstrate that PWM
+                        not only learns better policies than existing baselines on tasks with up to 152 action
+                        dimensions but also
+                        outperforms methods using ground-truth simulation dynamics. Furthermore, our approach scales to
+                        an 80-task
+                        setting and learns 13% higher reward than existing multi-task baselines without relying on
+                        expensive online
+                        planning. PWM's framework not only suggests a shift in how world models are utilized in RL but
+                        also sets a
+                        precedent for multi-task policies.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paper video. -->
+    <section class="section">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-two-thirds">
+                <h2 class="title is-3">Video</h2>
+                <div class="publication-video">
+                    <video controls width="720" preload="none" loading="lazy">
+                        <source src="media/pwm_small.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Method overview</h2>
+                    <div class="columns is-vcentered  is-centered">
+                        <video src="media/wm-animation.mp4" autoplay muted loop></video>
+                    </div>
+                    <br>
+                    Instead of building world models into algorithms, we propose using large-scale multi-task world
+                    models as
+                    differentiable simulators for policy learning. When well-regularized, these models enable efficient
+                    policy
+                    learning with first-order gradient optimization. This allows PWM to learn to solve 80 tasks in < 10
+                        minutes each without the need for expensive online planning. </h2>
+                </div>
+            </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-two-thirds">
+                    <div class="columns is-vcentered  is-centered">
+                        <img src="media/teaser_results.png" alt="PWM teaser results" />
+                    </div>
+                    We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
+                    not only
+                    outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a method
+                    using the
+                    dynamics and reward function of the simulator directly. In an 80-task setting <b>(right figure)</b>
+                    using a
+                    large 48M-parameter world model, PWM is able to consistently outperform
+                    TDMPC2, an MBRL method that uses the same world model but plans for actions online.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- </div> -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/7eQ2VORUwmU?modestbranding=1&autohide=1&showinfo=0&controls=1"
+            frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-3"><span class="dperact">Single-task results</span></h2>
+                    <div class="columns is-centered">
+                        <video id="dflex" autoplay muted loop playsinline style="height: auto;">
+                            <source src="media/dflex.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="columns is-centered">
+                        <img src="media/dflex_results_agg.png" alt="agg results" class="column is-two-thirds" />
+                    </div>
+                    <p>
+                        The figure shows 50% IQM with solid lines, mean with dashed lines, and 95% CI over all 5 tasks
+                        and 5
+                        random seeds. PWM is able to achieve a higher reward than model-free baselines PPO and SAC,
+                        TDMPC2, which
+                        uses the same world model as PWM and SHAC which uses the ground-truth dynamics and reward
+                        functions of the
+                        simulator. These results indicate that well-regularized world models can smooth out the
+                        optimization
+                        landscape, allowing for better first-order gradient optimization.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <h2 class="title is-3"><span class="dperact">Multi-task results</span></h2>
+                    <div class="media-grid">
+                        <!-- Example for 2x5 grid, adjust src paths accordingly -->
+                        <!-- <video src="media/button-press-topdown-wall.mp4" width="128" height="128" autoplay muted loop></video>
+            <img src="media/acrobot-swingup.gif" alt="Gif 1">
+            <video src="media/coffee-pull.mp4" width="128" height="128" autoplay muted loop></video>
+            <img src="media/cheetah-run.gif" alt="Gif 1">
+            <video src="media/door-open.mp4" width="128" height="128" autoplay muted loop></video>
+            <img src="media/finger-spin.gif" alt="Gif 1">
+            <video src="media/plate-slide-back-side.mp4" width="128" height="128" autoplay muted loop></video>
+            <img src="media/quadruped-run.gif" alt="Gif 1">
+            <video src="media/stick-pull.mp4" width="128" height="128" autoplay muted loop></video>
+            <img src="media/reacher-hard.gif" alt="Gif 1"> -->
+                        <video src="media/pwm-videos/dmcontrol-formatted/fish-swim.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/metaworld-formatted/mw-coffee-button.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/dmcontrol-formatted/cheetah-run-back.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/metaworld-formatted/mw-drawer-close.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/dmcontrol-formatted/walker-run.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/metaworld-formatted/mw-hammer.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/dmcontrol-formatted/walker-walk-backwards.mp4" width="128"
+                            height="128" autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/metaworld-formatted/mw-push-wall.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/dmcontrol-formatted/walker-walk.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <video src="media/pwm-videos/metaworld-formatted/mw-lever-pull.mp4" width="128" height="128"
+                            autoplay muted loop style="height: auto;"></video>
+                        <!-- Repeat for all media -->
+                    </div>
+                    <div class="columns is-centered">
+                        <img src="media/mutlitask_full.png" alt="Full multi-task results"
+                            class="column is-two-thirds" />
+                    </div>
+                    <p>
+                        The figure shows the performance of PWM and TDMPC2 on 30 and 80 multi-task benchmarks with
+                        results over 10 random seeds. PWM is able to outperform TDMPC2 while using the same world model
+                        without
+                        any form of online planning, making it the more scalable approach to large world models. The
+                        right
+                        figure compares PWM, a multi-task policy, with single-task experts SAC and DreamerV3. It is
+                        impressive
+                        that PWM is able to match their performance while being multi-task and only trained on offline
+                        data.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-full">
+                    <p>
+                        We strongly believe that increasingly large world models of billions of parameters and policy
+                        learning
+                        strategies such as PWM can unlock dexterous robotics at scale.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column">
+                    <div class="content has-text-centered">
+                        <p>
+                            Website template borrowed from <a
+                                href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>
+                            made
+                            by
+                            the amazing <a href="https://keunhong.com/">Keunhong Park</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>
