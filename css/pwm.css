@@ -280,3 +280,5 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.bibtexsection {padding: 4px 16px; font-family: "Courier", monospace; font-size: 15px; white-space: pre; background-color: #f4f4f4; text-align: left;}
