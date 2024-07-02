@@ -64,6 +64,18 @@ datacampcourse: true
 
     </script>
 
+    <!-- Automatically adjust video bottom padding -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var video = document.getElementById('myVideo');
+            video.addEventListener('loadedmetadata', function () {
+                var aspectRatio = (video.videoHeight / video.videoWidth) * 100;
+                var videoContainer = video.parentElement;
+                videoContainer.style.paddingBottom = aspectRatio + '%';
+            });
+        });
+    </script>
+
     <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
     <link rel="stylesheet" href="./css/fontawesome.all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -238,10 +250,9 @@ datacampcourse: true
     </section>
 
     <section class="section">
-        <!-- <div class="container is-max-desktop"> -->
         <div class="columns is-centered has-text-centered">
             <div class="column is-two-thirds">
-                <div class="columns is-vcentered  is-centered">
+                <div class="columns is-centered">
                     <img src="https://policy-world-model.github.io/media/teaser_results.png" alt="PWM teaser results" />
                 </div>
                 We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
@@ -251,7 +262,6 @@ datacampcourse: true
                 outperform TDMPC2, an MBRL method that uses the same world model but plans for actions online.
             </div>
         </div>
-        <!-- </div> -->
     </section>
 
     <section class="section">
