@@ -226,7 +226,7 @@ datacampcourse: true
             <div class="columns is-centered has-text-centered">
                 <div class="column is-four-fifths">
                     <h2 class="title is-3">Method overview</h2>
-                    <div class="columns is-vcentered  is-centered">
+                    <div class="video-container">
                         <video src="https://policy-world-model.github.io/media/wm-animation.mp4" autoplay muted
                             loop></video>
                     </div>
@@ -245,16 +245,22 @@ datacampcourse: true
         <div class="container is-max-desktop">
             <div class="columns is-centered has-text-centered">
                 <div class="column is-two-thirds">
-                    <div class="columns is-centered has-text-centered">
-                        <img src="https://policy-world-model.github.io/media/teaser_results.png"
-                            alt="PWM teaser results" />
+                    <div class="columns is-centered is-vcentered">
+                        <div class="column is-narrow">
+                            <img src="https://policy-world-model.github.io/media/teaser_results.png"
+                                alt="PWM teaser results" />
+                        </div>
                     </div>
-                    We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it
-                    not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a
-                    method using the dynamics and reward function of the simulator directly. In an 80-task setting
-                    <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
-                    outperform TD-MPC2, an MBRL method that uses the same world model, without the need for online
-                    planning.
+                    <p>
+                        We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that
+                        it
+                        not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than
+                        SHAC, a
+                        method using the dynamics and reward function of the simulator directly. In an 80-task setting
+                        <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
+                        outperform TD-MPC2, an MBRL method that uses the same world model, without the need for online
+                        planning.
+                    </p>
                 </div>
             </div>
         </div>
@@ -265,7 +271,7 @@ datacampcourse: true
             <div class="columns is-centered has-text-centered">
                 <div class="column is-full">
                     <h2 class="title is-3"><span class="dperact">Single-task results</span></h2>
-                    <div class="columns is-centered">
+                    <div class="video-container">
                         <video id="dflex" autoplay muted loop playsinline style="height: auto;">
                             <source src="https://policy-world-model.github.io/media/dflex.mp4" type="video/mp4">
                         </video>
