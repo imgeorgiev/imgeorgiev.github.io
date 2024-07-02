@@ -232,7 +232,7 @@ body {
   grid-template-columns: repeat(5, 1fr); /* 5 columns specifically for the grid */
   grid-template-rows: repeat(2, auto); /* 2 rows */
   gap: 10px; /* space between grid items */
-  width: 20vw; /* limits the width to 80% of the viewport width */
+  width: 50vw; /* limits the width to 80% of the viewport width */
   overflow: hidden;
   max-width: 100%;
   margin: 20px auto; /* centers the grid and adds vertical spacing */
@@ -256,7 +256,6 @@ body {
 
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
   height: 0;
   overflow: hidden;
   max-width: 100%;
