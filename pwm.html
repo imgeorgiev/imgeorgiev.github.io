@@ -197,11 +197,11 @@ datacampcourse: true
         </div>
     </section>
 
+    <!-- Abstract. -->
     <section class="section">
         <div class="container is-max-desktop">
-            <!-- Abstract. -->
             <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
+                <div class="column is-two-thirds">
                     <h2 class="title is-3">Abstract</h2>
                     <div class="content has-text-justified">
                         Reinforcement Learning (RL) has achieved impressive results on complex tasks but struggles in
@@ -247,6 +247,7 @@ datacampcourse: true
                                 loop></video>
                         </div>
                     </div>
+
                     <br>
                     We introduce Policy learning with large World Models (PWM), a novel Model-Based RL (MBRL) algorithm
                     and framework aimed at deriving effective continuous control policies from large, multi-task world
@@ -289,10 +290,9 @@ datacampcourse: true
                 <div class="column is-full">
                     <h2 class="title is-3"><span class="dperact">Single-task results</span></h2>
                     <div class="columns is-centered">
-                        <div class="column is-full">
-                            <video class="publication-video" src="https://policy-world-model.github.io/media/dflex.mp4"
-                                autoplay muted loop></video>
-                        </div>
+                        <video id="dflex" autoplay muted loop playsinline style="height: auto;">
+                            <source src="https://policy-world-model.github.io/media/dflex.mp4" type="video/mp4">
+                        </video>
                     </div>
                     <br>
                     <div class="columns is-centered is-vcentered">
@@ -386,7 +386,7 @@ datacampcourse: true
 
     <section class="section">
         <div class="container is-max-widescreen">
-            <h2>Citation</h2>
+            <h2 class="title is-3">Citation</h2>
             <div class="columns is-centered has-text-centered">
                 <p>
                     If you find our work useful, please consider citing the paper as follows:
