@@ -51,7 +51,6 @@ datacampcourse: true
 
 <body>
 
-
   <section class="hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
@@ -197,7 +196,7 @@ datacampcourse: true
   <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
-        <div class="column is-three-quarters">
+        <div class="column is-full">
           <h2 class="title is-3">Video</h2>
           <div class="publication-video">
             <iframe src="https://www.youtube.com/embed/RulQmghf6BI?modestbranding=1&autohide=1&showinfo=0&controls=1"
@@ -218,17 +217,20 @@ datacampcourse: true
               <source src="/img/pwm/wm-animation.mp4" type="video/mp4">
             </video>
           </div>
-
-          <br>
-          We introduce Policy learning with large World Models (PWM), a novel Model-Based RL (MBRL) algorithm
-          and framework aimed at deriving effective continuous control policies from large, multi-task world
-          models. We utilize pre-trained TD-MPC2 world models to efficiently learn control policies with first-order
-          gradients
-          in &lt; 10m per task. Our empirical evaluations on complex locomotion tasks indicate that PWM not
-          only achieves higher reward than baselines but also outperforms methods that use ground-truth
-          simulation dynamics. </h2>
+        </div>
+        <div class="column is-full">
+          <div class="content has-text-justified">
+            We introduce Policy learning with large World Models (PWM), a novel Model-Based RL (MBRL) algorithm
+            and framework aimed at deriving effective continuous control policies from large, multi-task world
+            models. We utilize pre-trained TD-MPC2 world models to efficiently learn control policies with first-order
+            gradients
+            in &lt; 10m per task. Our empirical evaluations on complex locomotion tasks indicate that PWM not
+            only achieves higher reward than baselines but also outperforms methods that use ground-truth
+            simulation dynamics.
+          </div>
         </div>
       </div>
+    </div>
   </section>
 
   <section class="section">
@@ -240,18 +242,18 @@ datacampcourse: true
               <img src="/img/pwm/teaser_results.png" alt="PWM teaser results" />
             </div>
           </div>
-          <p>
-            We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that
-            it
-            not only outperforms model-free baselines SAC and PPO but also achieves higher rewards than
-            SHAC, a
-            method using the dynamics and reward function of the simulator directly. In an 80-task setting
-            <b>(right figure)</b> using a large 48M-parameter world model, PWM is able to consistently
-            outperform TD-MPC2, an MBRL method that uses the same world model, without the need for online
-            planning.
-          </p>
+        </div>
+        <div class="column is-full">
+          <div class="content has-text-justified">
+            We evaluate PWM on high-dimensional continuous control tasks <b>(left figure)</b> and find that it not only
+            outperforms model-free baselines SAC and PPO but also achieves higher rewards than SHAC, a method using the
+            dynamics and reward function of the simulator directly. In an 80-task setting <b>(right figure)</b> using a
+            large 48M-parameter world model, PWM is able to consistently outperform TD-MPC2, an MBRL method that uses
+            the same world model, without the need for online planning.
+          </div>
         </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -271,14 +273,16 @@ datacampcourse: true
               <img src="/img/pwm/dflex_results_agg.png" alt="agg results" />
             </div>
           </div>
-          <p>
-            The figure shows 50% IQM with solid lines, mean with dashed lines, and 95% CI over all 5 tasks
-            and 5 random seeds. PWM is able to achieve a higher reward than model-free baselines PPO and
-            SAC, TD-MPC2, which uses the same world model as PWM and SHAC which uses the ground-truth
-            dynamics and reward functions of the simulator. These results indicate that well-regularized
-            world models can smooth out the optimization landscape, allowing for better first-order gradient
-            optimization.
-          </p>
+          <div class="column is-full">
+            <div class="content has-text-justified">
+              The figure shows 50% IQM with solid lines, mean with dashed lines, and 95% CI over all 5 tasks
+              and 5 random seeds. PWM is able to achieve a higher reward than model-free baselines PPO and
+              SAC, TD-MPC2, which uses the same world model as PWM and SHAC which uses the ground-truth
+              dynamics and reward functions of the simulator. These results indicate that well-regularized
+              world models can smooth out the optimization landscape, allowing for better first-order gradient
+              optimization.
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -317,27 +321,16 @@ datacampcourse: true
               <img src="/img/pwm/mutlitask_full.png" alt="Full multi-task results" />
             </div>
           </div>
-          <p>
-            The figure shows the performance of PWM and TD-MPC2 on 30 and 80 multi-task benchmarks with
-            results over 10 random seeds. PWM is able to outperform TD-MPC2 while using the same world model
-            without any form of online planning, making it the more scalable approach to large world models.
-            The right figure compares PWM, a multi-task policy, with single-task experts SAC and DreamerV3.
-            It is impressive that PWM is able to match their performance while being multi-task and only
-            trained on offline data.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container is-max-widescreen">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full">
-          <p>
-            We strongly believe that increasingly large world models of billions of parameters and policy
-            learning strategies such as PWM can unlock dexterous robotics at scale.
-          </p>
+          <div class="column is-full">
+            <div class="content has-text-justified">
+              The figure shows the performance of PWM and TD-MPC2 on 30 and 80 multi-task benchmarks with
+              results over 10 random seeds. PWM is able to outperform TD-MPC2 while using the same world model
+              without any form of online planning, making it the more scalable approach to large world models.
+              The right figure compares PWM, a multi-task policy, with single-task experts SAC and DreamerV3.
+              It is impressive that PWM is able to match their performance while being multi-task and only
+              trained on offline data.
+            </div>
+          </div>
         </div>
       </div>
     </div>
