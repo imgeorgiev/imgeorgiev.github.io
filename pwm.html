@@ -170,6 +170,34 @@ datacampcourse: true
     </div>
   </section>
 
+  <!-- Teaser video. -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <video id="teaser_video" autoplay loop muted width="1080" preload="none" loading="lazy">
+          <source src="media/pwm_teaser.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <script>
+          const video = document.getElementById('teaser_video');
+
+          // Duration of the last 5 seconds
+          const loopBackTime = 3;
+
+          // When the video ends
+          video.addEventListener('timeupdate', () => {
+            // Check if video is near its end (playtime >= totalDuration - 5)
+            if (video.currentTime >= video.duration - loopBackTime) {
+              video.loop = true; // Enable looping
+              video.currentTime = video.duration - loopBackTime; // Go to the last 5 seconds
+            }
+          });
+        </script>
+      </div>
+    </div>
+  </section>
+
+
   <!-- Abstract. -->
   <section class="section">
     <div class="container is-max-widescreen">
