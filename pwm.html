@@ -39,19 +39,20 @@ datacampcourse: true
     });
   </script>
 
+  <!-- This script makes the teaser video loopback -->
   <script>
-    const video = document.getElementById('teaser_video');
+    document.addEventListener('DOMContentLoaded', function () {
+      const video = document.getElementById('teaser_video');
 
-    // Duration of the last 5 seconds
-    const loopBackTime = 5;
+      const loopBackTime = 5; // Duration of the last 5 seconds
 
-    // When the video ends
-    video.addEventListener('timeupdate', () => {
-      // When video reaches the end, loop back to the last 5 seconds
-      if (video.currentTime >= video.duration - 0.1) {
-        video.currentTime = video.duration - loopBackTime; // Jump to last 5 seconds
-        video.play(); // Ensure playback resumes smoothly
-      }
+      video.addEventListener('timeupdate', () => {
+        // When video reaches the end, loop back to the last 5 seconds
+        if (video.currentTime >= video.duration - 0.1) {
+          video.currentTime = video.duration - loopBackTime; // Jump to the last 5 seconds
+          video.play(); // Ensure playback resumes smoothly
+        }
+      });
     });
   </script>
 
@@ -67,20 +68,6 @@ datacampcourse: true
 
 <body>
 
-  <!-- Teaser video. -->
-  <!-- <section class="hero"> -->
-  <!-- <div class="container is-max-widescreen"> -->
-  <!-- <div class="columns is-centered has-text-centered"> -->
-  <!-- <div class="column is-two-thirds"> -->
-  <!-- <video id="teaser_video" autoplay muted playsinline> -->
-  <!-- <source src="/img/pwm/pwm_teaser.mp4" type="video/mp4"> -->
-  <!-- Your browser does not support the video tag. -->
-  <!-- </video> -->
-  <!-- </div> -->
-  <!-- </div> -->
-  <!-- </div> -->
-  <!-- </section> -->
-
   <section class="hero">
     <div class="hero-body">
       <div class="container is-max-widescreen">
@@ -90,7 +77,6 @@ datacampcourse: true
               <source src="/img/pwm/pwm_teaser.mp4" type="video/mp4">
               <h1 class="title is-1 publication-title">PWM: Policy Learning with Multi-task World Models</h1>
             </video>
-            <!-- <h1 class="title is-1 publication-title">PWM: Policy Learning with Multi-task World Models</h1> -->
             <!-- <h3 class="title is-4 conference-authors"><a target="_blank"
                                 href="https://www.robot-learning.org/">NeurIPS
                                 2024 Submission</a></h3> -->
