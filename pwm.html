@@ -39,6 +39,22 @@ datacampcourse: true
     });
   </script>
 
+  <script>
+    const video = document.getElementById('teaser_video');
+
+    // Duration of the last 5 seconds
+    const loopBackTime = 2;
+
+    // When the video ends
+    video.addEventListener('timeupdate', () => {
+      // When video reaches the end, loop back to the last 5 seconds
+      if (video.currentTime >= video.duration - 0.1) {
+        video.currentTime = video.duration - loopBackTime; // Jump to last 5 seconds
+        video.play(); // Ensure playback resumes smoothly
+      }
+    });
+  </script>
+
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -52,30 +68,17 @@ datacampcourse: true
 <body>
 
   <!-- Teaser video. -->
-  <section class="section">
-    <!-- <div class="columns is-centered has-text-centered"> -->
-    <!-- <div class="column is-two-thirds"> -->
-    <video id="teaser_video" autoplay muted playsinline>
-      <source src="/img/pwm/pwm_teaser.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <script>
-      const video = document.getElementById('teaser_video');
-
-      // Duration of the last 5 seconds
-      const loopBackTime = 3;
-
-      // When the video ends
-      video.addEventListener('timeupdate', () => {
-        // When video reaches the end, loop back to the last 5 seconds
-        if (video.currentTime >= video.duration - 0.1) {
-          video.currentTime = video.duration - loopBackTime; // Jump to last 5 seconds
-          video.play(); // Ensure playback resumes smoothly
-        }
-      });
-    </script>
-    <!-- </div> -->
-    <!-- </div> -->
+  <section class="hero">
+    <div class="container is-max-widescreen">
+      <!-- <div class="columns is-centered has-text-centered"> -->
+      <!-- <div class="column is-two-thirds"> -->
+      <video id="teaser_video" autoplay muted playsinline>
+        <source src="/img/pwm/pwm_teaser.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <!-- </div> -->
+      <!-- </div> -->
+    </div>
   </section>
 
   <section class="hero">
