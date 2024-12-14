@@ -1,9 +1,9 @@
 ---
 layout: default
 title: "PWM"
-subtitle: Policy Learning with Large World Models
+subtitle: Policy Learning with Mlti-task World Models
 css: "/css/pwm.css"
-meta-title: "PWM: Policy Learning with Large World Models"
+meta-title: "PWM: Policy Learning with Mlti-task World Models"
 datacampcourse: true
 ---
 
@@ -12,7 +12,7 @@ datacampcourse: true
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="PWM: Policy Learning with Large World Models">
+  <meta name="description" content="PWM: Policy Learning with Multi-task World Models">
   <meta name="keywords" content="Reinforcement Learning, Robot Control, World Models">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PWM</title>
@@ -53,29 +53,29 @@ datacampcourse: true
 
   <!-- Teaser video. -->
   <section class="section">
-    <div class="columns is-centered has-text-centered">
-      <!-- <div class="column is-two-thirds"> -->
-      <video id="teaser_video" autoplay muted preload="none" loading="lazy">
-        <source src="/img/pwm/pwm_teaser.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <script>
-        const video = document.getElementById('teaser_video');
+    <!-- <div class="columns is-centered has-text-centered"> -->
+    <!-- <div class="column is-two-thirds"> -->
+    <video id="teaser_video" autoplay muted playsinline>
+      <source src="/img/pwm/pwm_teaser.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <script>
+      const video = document.getElementById('teaser_video');
 
-        // Duration of the last 5 seconds
-        const loopBackTime = 3;
+      // Duration of the last 5 seconds
+      const loopBackTime = 3;
 
-        // When the video ends
-        video.addEventListener('timeupdate', () => {
-          // Check if video is near its end (playtime >= totalDuration - 5)
-          if (video.currentTime >= video.duration - loopBackTime) {
-            video.loop = true; // Enable looping
-            video.currentTime = video.duration - loopBackTime; // Go to the last 5 seconds
-          }
-        });
-      </script>
-      <!-- </div> -->
-    </div>
+      // When the video ends
+      video.addEventListener('timeupdate', () => {
+        // When video reaches the end, loop back to the last 5 seconds
+        if (video.currentTime >= video.duration - 0.1) {
+          video.currentTime = video.duration - loopBackTime; // Jump to last 5 seconds
+          video.play(); // Ensure playback resumes smoothly
+        }
+      });
+    </script>
+    <!-- </div> -->
+    <!-- </div> -->
   </section>
 
   <section class="hero">
@@ -83,7 +83,7 @@ datacampcourse: true
       <div class="container is-max-widescreen">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">PWM: Policy Learning with Large World Models</h1>
+            <h1 class="title is-1 publication-title">PWM: Policy Learning with Multi-task World Models</h1>
             <!-- <h3 class="title is-4 conference-authors"><a target="_blank"
                                 href="https://www.robot-learning.org/">NeurIPS
                                 2024 Submission</a></h3> -->
@@ -205,15 +205,17 @@ datacampcourse: true
         <div class="column is-two-thirds">
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
-            Reinforcement Learning (RL) has achieved impressive results on complex tasks but struggles in
-            multi-task settings with different embodiments. World models offer scalability by learning a
-            simulation of the environment, yet they often rely on inefficient gradient-free optimization
-            methods. We introduce Policy learning with large World Models (PWM), a novel model-based RL
-            algorithm that learns continuous control policies from large multi-task world models. By
-            pre-training the world model on offline data and using it for first-order gradient policy
-            learning, PWM effectively solves tasks with up to 152 action dimensions and outperforms methods
-            using ground-truth dynamics. Additionally, PWM scales to an 80-task setting, achieving up to
-            27% higher rewards than existing baselines without the need for expensive online planning.
+            Reinforcement Learning (RL) has made significant strides in complex tasks but struggles in multi-task
+            settings with different embodiments. World models methods offer scalability by learning a simulation of the
+            environment, but often rely on inefficient gradient-free optimization methods for policy extraction. In
+            contrast, gradient-based methods exhibit lower variance but fail to handle discontinuities. Our work reveals
+            that well-regularized world models can generate smoother optimization landscapes than the actual dynamics,
+            facilitating more effective first-order optimization. We introduce Policy learning with multi-task World
+            Models (PWM), a novel model-based RL algorithm for continuous control. Initially, the world model is
+            pre-trained on offline data, and then policies are extracted from it using first-order optimization in less
+            than 10 minutes per task. PWM effectively solves tasks with up to 152 action dimensions and outperforms
+            methods that use ground-truth dynamics. Additionally, PWM scales to an 80-task setting, achieving up to 27\%
+            higher rewards than existing baselines, without relying on costly online planning.
           </div>
         </div>
       </div>
@@ -249,7 +251,7 @@ datacampcourse: true
       </div>
       <div class="column is-full">
         <div class="content has-text-justified">
-          We introduce Policy learning with large World Models (PWM), a novel Model-Based RL (MBRL) algorithm
+          We introduce Policy learning with multi-task World Models (PWM), a novel Model-Based RL (MBRL) algorithm
           and framework aimed at deriving effective continuous control policies from large, multi-task world
           models. We utilize pre-trained TD-MPC2 world models to efficiently learn control policies with first-order
           gradients in &lt; 10m per task. Our empirical evaluations on complex locomotion tasks indicate that PWM not
@@ -365,7 +367,7 @@ datacampcourse: true
         <div id="bibtex-text" class="bibtexsection"
           onClick="window.getSelection().selectAllChildren(document.getElementById('bibtex-text'));">
           @misc{georgiev2024pwm,
-          title={PWM: Policy Learning with Large World Models},
+          title={PWM: Policy Learning with Multi-task World Models},
           author={Georgiev, Ignat and Giridhar, Varun and Hansen, Nicklas and Garg, Animesh},
           eprint={2407.02466},
           archivePrefix={arXiv},
