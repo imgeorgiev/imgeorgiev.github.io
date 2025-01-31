@@ -48,7 +48,7 @@ If you follow the origin work of this [1] you'll quickly realize that these RL m
 
 (OK that was actually pretty cool)
 
-These tasks that RL does really well is what I call **cyclic tasks**. From control theory, cyclic behaviour is when the optimal trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $$argmax J = \{A, A, A, ...\}$$. Cyclic tasks are ones that can be solved with cyclic behaviour.
+These tasks that RL does really well is what I call **cyclic tasks**. From control theory, cyclic behaviour is when the optimal trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $$\text{argmax} J = \{A, A, A, ...\}$$. Cyclic tasks are ones that can be solved with cyclic behaviour.
 
 While intuitively appealing, we can't use this to quantify cyclic behaviour. I am not sure what we can use, but I found two patterns - (1) stable value functions and (2) convex objectives after stochastic smoothing.
 
@@ -85,7 +85,7 @@ RL looks pretty magical so far, you can't just tell me it's bad now! In my opini
 
 The simplest example - pick and place. Can you get it to work? probably. However, it doesn't matter how many days you spend reward engineering this, RL is still going to be terrible at this task! Let's take the very well engineered [StackCube task from Maniskill3](https://maniskill.readthedocs.io/en/latest/tasks/table_top_gripper/index.html#stackcube-v1).
 
-<div class="embed-responsive" embed-responsive-1by1>
+<div class="embed-responsive embed-responsive-1by1">
   <video class="embed-responsive-item" controls>
     <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
   </video>
@@ -103,7 +103,7 @@ However, the focus of this blog is the PushT task. It's a contact-rich, highly n
 reward = clip(coverage / success_threshold, 0.0, 1.0)
 ```
 
-<div class="embed-responsive" embed-responsive-1by1>
+<div class="embed-responsive embed-responsive-1by1">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht.mp4" type="video/mp4">
   </video>
@@ -111,7 +111,7 @@ reward = clip(coverage / success_threshold, 0.0, 1.0)
 
 This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. I tried applying TD-MPC2 [8], an actor-critic approach with online planning to the task. I chose it because I thought it had the highest chance of success, but it still gets 0% success.
 
-<div class="embed-responsive" embed-responsive-1by1>
+<div class="embed-responsive embed-responsive-1by1">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc2.mp4" type="video/mp4">
   </video>
@@ -124,7 +124,7 @@ This is an incredibly hard task for RL to do. Why? To succeed, you need to push 
 
 Why can't RL solve it? To find out let us investigate the optimization landscape for the actor $$J(a_t) = Q(s_t, a_t)$$ where the actor is trying to find the action that maximizes the value function. Using this simple actor objective, we can take the converged critic, replay an expert demo and at each timstep state $s_t$ sample $a_t$ across the full range.
 
-<div class="embed-responsive" embed-responsive-21by9>
+<div class="embed-responsive embed-responsive-21by9">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape.mp4" type="video/mp4">
   </video>
@@ -134,7 +134,7 @@ Darker colors indicate high value (low loss) and light colors indicate low value
 
 This isn't actually the full story, in the optimization landscape above, I was using a fixed critic which means that my actor had a fixed objective. In practice, most algorithms like TD-MPC2 have an actor-critic architecture where the both are updated one after the other. **This means that our actor has a moving target!** From an optimization point of view, that is a disaster. Here is the disaster visualized:
 
-<div class="embed-responsive" embed-responsive-21by9>
+<div class="embed-responsive embed-responsive-21by9">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape_moving.mp4" type="video/mp4">
   </video>
@@ -179,7 +179,7 @@ The beautiful simplicity of BC
 
 If you've been around in robotics, you've probably noticed the new cool kid on the block - Behaviour Cloning (BC). Influential work such as Diffusion Policy [4], OpenVLA [5] and $\pi_0$ [6] did pretty incredible manipulation tasks such as folding a T-shirt or picking graps from a plastic box with a spoon directly from image observations. Meanwhile in RL we still struggle to stack cubes with priviledged state information.
 
-<div class="embed-responsive" embed-responsive-4by3>
+<div class="embed-responsive embed-responsive-4by3">
   <video class="embed-responsive-item" controls>
     <source src="https://dnrjl01ydafck.cloudfront.net/v3/upload/processed_collage.mp4" title="Pi-0 model from Phyiscal Intelligencce" type="video/mp4">
   </video>
@@ -197,7 +197,7 @@ $$ J(\theta) = \| A_t - \pi_\theta(o_t) \|_1 $$
 
 I took 200 expert demos and trained a simple ACT policy to solve PushT with 78% success rate (a big jump from RL's 0%)!
 
-<div class="embed-responsive" embed-responsive-1by1>
+<div class="embed-responsive embed-responsive-1by1">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_act.mp4" type="video/mp4">
   </video>
@@ -216,7 +216,7 @@ Why does this work so much better, especially with such a simple algorithm? Ther
 
 Let's demonstrate the convexity of the problem by plotting the policy objective over an expert demonstration again:
 
-<div class="embed-responsive" embed-responsive-21by9>
+<div class="embed-responsive embed-responsive-21by9">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_bc_landscape.mp4" type="video/mp4">
   </video>
@@ -246,7 +246,7 @@ The case for BC is simple, as long as it stays in-distribution, it will predict 
 
 Now RL is a different topic, by problem definition, RL has to *explore* to find its optimal solution. Unfortuantely, in our imaginary problem, exploring might sometimes mean death. In the common actor-critic architecture, this phenomena is surprisngly common. Value critic incorrectly extrapolates high reward OOD, actor hasn't seen the OOD data and just predicts garbage. This results in a vicious loop of RL "confidently jumping off a cliff". Let's see this in a practical example though! Here is a visualization of the problem landscape of TD-MPC2 offline trained on this task. 
 
-<div class="embed-responsive" embed-responsive-21by9>
+<div class="embed-responsive embed-responsive-21by9">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape_dead.mp4" type="video/mp4">
   </video>
@@ -269,7 +269,7 @@ Everybody wants to love RL. I want to love RL! However, I can't ignore the simpl
 
 Here is a direct comparison between the optimization landscapes of RL and BC. Ask yourself, which one do you want to solve?
 
-<div class="embed-responsive">
+<div class="embed-responsive embed-responsive-21by9">
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/merged.mp4" type="video/mp4">
   </video>
