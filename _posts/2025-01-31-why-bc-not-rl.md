@@ -52,7 +52,7 @@ These tasks that RL does really well is what I call **cyclic tasks** (let me kno
 
 While intuitively appealing, we can't use this to quantify cyclic behaviour. I am not sure what we can use, but I found two patterns - (1) stable value functions and (2) convex objectives after stochastic smoothing.
 
-In my [AHAC paper](https://adaptive-horizon-actor-critic.github.io/), I had an experiment with an Anymal quadruped running as fast as possible. TODO make just anymal visible.
+In my AHAC paper [9], I had an experiment with an Anymal quadruped running as fast as possible.
 
 <div class="embed-responsive embed-responsive-16by9">
   <video class="embed-responsive-item" controls>
@@ -69,7 +69,7 @@ $$ V(s_t) = \mathbb{E} \bigg[ \sum_{t'=t}^{T} \gamma r(s_{t'}, a_{t'}) \bigg] $$
 The second common pattern I found is that these cyclic tasks appear convex after stochastic smoothing ([see What makes RL tick](https://www.imgeorgiev.com/2024-03-15-stochastic-rl/)). Below I take the converged and optimal Anymal running policy, select a **single parameter** from the actor neural network and change it to get a pseudo-optimization landscape for the problem.
 
 ![](/img/blog/2025-01-31-why-bc-not-rl/anymal_landscape.jpeg)
-TODO update so that it's cleaner and has only the blue plot. Also TODO apply stochastic smooethingf
+TODO update so that it's cleaner and has only the blue plot. Also TODO apply stochastic smoothing
 
 While this landscape is absolutely not convex, if you apply sufficient smoothing to it, it becomes pretty easy to solve for most RL algorithms. This stochastic smoothing is what has enabled RL to do what classical control hasn't been able to. All cyclic tasks I've seen exhibit good convexity after smoothing.
 
@@ -114,7 +114,7 @@ reward = clip(coverage / success_threshold, 0.0, 1.0)
   </video>
 </div>
 
-This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. Here is TD-MPC2, one of the best possible algorithms for this task doing its best
+This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. Here is TD-MPC2 [8], one of the best possible algorithms for this task doing its best
 
 <div class="embed-responsive embed-responsive-16by9">
   <video class="embed-responsive-item" controls>
@@ -124,12 +124,16 @@ This is an incredibly hard task for RL to do. Why? To succeed, you need to push 
 
 Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at each timstep state $s_t$ sampled $a_t$ across the full range and used them to obtain the TD-MPC2 value function $Q(s_t, a_t)$. As you can see the value landscape has very distinct local minima:
 
-<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape.mp4" title="PushT"></video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape.mp4" type="video/mp4">
+  </video>
+</div>
 
 As you can probably imagine, RL doesn't like those local minima and easily gets stuck in them. Matter of fact, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task. [3]
 
 <details>
-  It might be possible to engineer a better reward to solve the task, but that is a seperate bucket of issues. [Maniskill3 tried that with some success.](/https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/push_t.py). While possible, I want you to ponder the question, is this really the right toolbox for this task?
+  It might be possible to engineer a better reward to solve the task, but that is a seperate bucket of issues. <a href="/https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/push_t.py">Maniskill3 tried that with some success.</a>. While possible, I want you to ponder the question, is this really the right toolbox for this task?
 </details>
 
 
@@ -155,14 +159,18 @@ The beautiful simplicity of BC
 
 If you've been around in robotics, you've probably noticed the new cool kid on the block - Behaviour Cloning (BC). Influential work such as Diffusion Policy [4], OpenVLA [5] and $\pi_0$ [6] did pretty incredible manipulation tasks such as folding a T-shirt or picking graps from a plastic box with a spoon directly from image observations. Meanwhile in RL we still struggle to stack cubes with priviledged state information.
 
-<video controls src="https://dnrjl01ydafck.cloudfront.net/v3/upload/processed_collage.mp4" title="Pi-0 model from Phyiscal Intelligencce"></video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="https://dnrjl01ydafck.cloudfront.net/v3/upload/processed_collage.mp4" title="Pi-0 model from Phyiscal Intelligencce" type="video/mp4">
+  </video>
+</div>
 
 Why does BC work where RL hasn't? I think it's manily due to two reason (1) it's simple and (2) supervised learning is an easier problem to optimize over.
 Let's see why by studying one of the simplest, yet impressive BC algorithms - Action Chunking Transformer (ACT) [7]. It's super simple!
 1. Collect some expert demonstration data (usually via teleoperation).
 2. Get observation from observation $o_t$ from your offline dataset.
 3. Tokenize images with a pre-trained ResNet. Tokenize state data with an MLP.
-4. Feed both into a transformer encoder and predict a trajectory $\hat{A}_t = \pi(o_t)$ and train it to regress some ground truth (expert data) using supervised learning:
+4. Feed both into a transformer encoder-decoder and predict a trajectory $\hat{A}_t = \pi(o_t)$ and train it to regress some ground truth (expert data) using supervised learning:
 
 $$ J(\theta) = \| A_t - \hat{A}_t \| $$
 
@@ -170,7 +178,11 @@ $$ J(\theta) = \| A_t - \hat{A}_t \| $$
 
 I took 200 expert demos and trained a simple ACT policy to solve PushT with 72% success rate (a big jump from RL's 0%)!
 
-<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_act.mp4" title="ACT solving PushT"></video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_act.mp4" type="video/mp4">
+  </video>
+</div>
 
 Why does this work so much better, especially with such a simple algorithm? There are many answers to this question but the two ones I've found are:
 1. Supervised learning is a much easier optimization problem than RL. We have fixed targets and can use first-order optimization. Meanwhile, RL has a moving target (the value function) and uses zeroth-order optimization since we typicall assume unknown / difficult to model dynamics.
@@ -178,7 +190,12 @@ Why does this work so much better, especially with such a simple algorithm? Ther
 
 Let's demonstrate both by recreating the optimization landscape from the previous section but now with the ACT problem formulation. Looks much smoother and better behaved.
 
-<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_bc_landscape.mp4" title="ACT solving PushT"></video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_bc_landscape.mp4" type="video/mp4">
+  </video>
+</div>
+
 
 Another exciting aspect that you should have noticed is that ACT didn't really have local minima at the point of contact! This makes BC better-posed to solve these non-cyclic tasks.
 
@@ -195,7 +212,18 @@ That being said, BC is SIMPLE and that is it's greatest strength. I'll leave you
 Conclusion
 ================
 
-Everybody wants to love RL. I want to love RL! However, I can't ignore the simple elegance and performance of modern BC. There's a huge race right now with multiple industry labs and startups pushing multi-task BC methods do their limits. The next few years will be excitign to say the least! Who knows, maybe RL will make a come back just like it did with ChatGPT. It's an exciting time to be in robotics!
+Everybody wants to love RL. I want to love RL! However, I can't ignore the simple elegance and performance of modern BC. Here is a direct comparison between the optimization landscapes of RL and BC. Ask yourself, which one do you want to solve?
+
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/merged.mp4" type="video/mp4">
+  </video>
+</div>
+<p align="center">
+  Comparison between optimization landscapes when replaying an expert demo. Left is visualization of the environment. Middle is the BC optimization landscape. Right is the RL optimization landscape.
+</p>
+
+There's a huge race right now with multiple industry labs and startups pushing multi-task BC methods do their limits. The next few years will be excitign to say the least! Who knows, maybe RL will make a come back just like it did with ChatGPT. It's an exciting time to be in robotics!
 
 Thank you for making it this far. I hope that you learned something!
 
@@ -208,10 +236,11 @@ References
 * [1] [Rudin et al. Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning](https://arxiv.org/abs/2109.11978)
 * [2] [Christopher et al. Limit Cycles of Differential Equations](https://link.springer.com/book/10.1007/978-3-030-59656-9)
 * [3] [Zhou et al. DINO-WM: World Models on Pre-trained Visual Features enable Zero-shot Planning](https://arxiv.org/abs/2411.04983)
-* [4] Diffusion Policy
-* [5] OpenVLA
-* [6] Pi0
-* [7] ACT
-* [8] [Georgiev et al., Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation](https://adaptive-horizon-actor-critic.github.io/)
+* [4] [Chi et al. Diffusion Policy: Visuomotor Policy Learning via Action Diffusion](https://arxiv.org/abs/2303.04137)
+* [5] [Kim et al. OpenVLA: An Open-Source Vision-Language-Action Model](https://arxiv.org/abs/2406.09246)
+* [6] [Black et a. π0: A Vision-Language-Action Flow Model for General Robot Control](https://arxiv.org/html/2410.24164v1)
+* [7] [Zhao et al. Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware](https://arxiv.org/abs/2304.13705)
+* [8] [Hansen et al. TD-MPC2: Scalable, Robust World Models for Continuous Control](https://arxiv.org/abs/2310.16828)
+* [9] [Georgiev et al., Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation](https://adaptive-horizon-actor-critic.github.io/)
 
 
