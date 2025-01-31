@@ -48,7 +48,7 @@ If you follow the origin work of this [1] you'll quickly realize that these RL m
 
 (OK that was actually pretty cool)
 
-These tasks that RL does really well is what I call **cyclic tasks** (let me know if there is a more established term!) What describes a cyclic behaviour? From control theory, the trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $$\argmax(J) = \{A, A, A, ...\}$$.
+These tasks that RL does really well is what I call **cyclic tasks** (let me know if there is a more established term!) What describes a cyclic behaviour? From control theory, the trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $$\argmax J = \{A, A, A, ...\}$$.
 
 While intuitively appealing, we can't use this to quantify cyclic behaviour. I am not sure what we can use, but I found two patterns - (1) stable value functions and (2) convex objectives after stochastic smoothing.
 
@@ -122,7 +122,7 @@ This is an incredibly hard task for RL to do. Why? To succeed, you need to push 
   </video>
 </div>
 
-Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at each timstep state $s_t$ sampled $a_t$ across the full range and used them to obtain the TD-MPC2 value function $Q(s_t, a_t)$. As you can see the value landscape has very distinct local minima:
+Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at each timstep state $s_t$ sampled $a_t$ across the full range and used them to obtain the TD-MPC2 value function $Q(s_t, a_t)$ **at convergence**. As you can see the value landscape has very distinct local minima:
 
 <div class="embed-responsive embed-responsive-16by9">
   <video class="embed-responsive-item" controls>
@@ -130,7 +130,7 @@ Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at
   </video>
 </div>
 
-As you can probably imagine, RL doesn't like those local minima and easily gets stuck in them. Matter of fact, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task. [3]
+As you can probably imagine, RL doesn't like those local minima and easily gets stuck in them. Matter of fact, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task [3]. This isn't actually the worst. The landscape above is the converged one on an offline dataset. If you run RL online, then the critic changes over time and that in turn changes the policy objective. What's even worse is that we have to train the critic with zeroth-order gradient methods which are super inefficient.
 
 <details>
   It might be possible to engineer a better reward to solve the task, but that is a seperate bucket of issues. <a href="/https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/push_t.py">Maniskill3 tried that with some success.</a>. While possible, I want you to ponder the question, is this really the right toolbox for this task?
@@ -242,5 +242,4 @@ References
 * [7] [Zhao et al. Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware](https://arxiv.org/abs/2304.13705)
 * [8] [Hansen et al. TD-MPC2: Scalable, Robust World Models for Continuous Control](https://arxiv.org/abs/2310.16828)
 * [9] [Georgiev et al., Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation](https://adaptive-horizon-actor-critic.github.io/)
-
-
+* [10] [Mohamed et al., Monte Carlo Gradient Estimation in Machine Learning](https://arxiv.org/abs/1906.10652)
