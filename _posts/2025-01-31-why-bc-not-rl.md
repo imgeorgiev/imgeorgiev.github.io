@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [DRAFT] Why Behaviour Cloning?
+title: Why Behaviour Cloning?
 subtitle: How BC worked where RL failed
 image: /img/blog/2025-01-31-why-bc-not-rl/bc.png
 bibliography: papers.bib
