@@ -2,7 +2,7 @@
 layout: post
 title: [DRAFT] Why Behaviour Cloning?
 subtitle: How BC worked where RL failed
-image: /img/blog/2025-02-01-why-bc-not-rl/bc.png
+image: /img/blog/2025-01-31-why-bc-not-rl/bc.png
 bibliography: papers.bib
 tags: [robotics, research, long]
 header-includes:
@@ -15,7 +15,7 @@ header-includes:
 
 Everybody *wants* to love Reinforcement Learning (RL)! It was the 3rd most popular topic at NeurIPS 2024, just after CV and NLP 🤯! Hell, I self-identify as an RL person. However, the unfortuante reality is that RL has failed to deliver when it comes to robotics. There's a new kid on the block called Behaviour Cloning (BC) that only in a couple of years did what RL couldn't in decades. I recently did a little foray into the world of BC and now want to share what I learned.
 
-![Generated with ChatGPT](/img/blog/2025-02-01-why-bc-not-rl/bc.png)
+![Generated with ChatGPT](/img/blog/2025-01-31-why-bc-not-rl/bc.png)
 
 
 **Table of contents**
@@ -62,11 +62,11 @@ If we now take the critic of converged AHAC on this task (or any critic really) 
 
 $$ V(s_t) = \mathbb{E} \bigg[ \sum_{t'=t}^{T} \gamma r(s_{t'}, a_{t'}) \bigg] $$
 
-![](/img/blog/2025-02-01-why-bc-not-rl/value.png)
+![](/img/blog/2025-01-31-why-bc-not-rl/value.png)
 
 The second common pattern I found is that these cyclic tasks appear convex after stochastic smoothing ([see What makes RL tick](https://www.imgeorgiev.com/2024-03-15-stochastic-rl/)). Below I take the converged and optimal Anymal running policy, select a **single parameter** from the actor neural network and change it to get a pseudo-optimization landscape for the problem.
 
-![](/img/blog/2025-02-01-why-bc-not-rl/anymal_landscape.jpeg)
+![](/img/blog/2025-01-31-why-bc-not-rl/anymal_landscape.jpeg)
 TODO update so that it's cleaner and has only the blue plot. Also TODO apply stochastic smooethingf
 
 While this landscape is absolutely not convex, if you apply sufficient smoothing to it, it becomes pretty easy to solve for most RL algorithms. This stochastic smoothing is what has enabled RL to do what classical control hasn't been able to. All cyclic tasks I've seen exhibit good convexity after smoothing.
@@ -94,7 +94,7 @@ RL is terrible at non-cyclic tasks! The simplest example - pick and place. Can y
 
 Their [reward function](https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/stack_cube.py#L145) is a whopping 36 lines of code! They have 3 mode of reward (1) bring robot arm to cube to pick, (2) grasp cube on put on top of other cube and (3) ungrasp cube on top of the other cube. Here is a scetch of how I *think* that translates to a value function over time.
 
-![](/img/blog/2025-02-01-why-bc-not-rl/cube_value.jpeg)
+![](/img/blog/2025-01-31-why-bc-not-rl/cube_value.jpeg)
 TODO actually get from data.
 
 That looks significantly less straightforward to solve. Imagine you're an RL algorithm osciliating between those different states of the task. As you can imagine that create a significantly more challening optimization landscape. TODO actually get that from benchmark.
@@ -105,15 +105,15 @@ I also want to show another non-cyclic task, probably a personal favourite of mi
 reward = clip(coverage / success_threshold, 0.0, 1.0)
 ```
 
-<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht.mp4" title="PushT"></video>
+<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht.mp4" title="PushT"></video>
 
 This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. Here is TD-MPC2, one of the best possible algorithms for this task doing its best
 
-<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_tdmpc2.mp4" title="PushT"></video>
+<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc2.mp4" title="PushT"></video>
 
 Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at each timstep state $s_t$ sampled $a_t$ across the full range and used them to obtain the TD-MPC2 value function $Q(s_t, a_t)$. As you can see the value landscape has very distinct local minima:
 
-<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_tdmpc_landscape.mp4" title="PushT"></video>
+<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape.mp4" title="PushT"></video>
 
 As you can probably imagine, RL doesn't like those local minima and easily gets stuck in them. Matter of fact, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task. [3]
 
@@ -126,7 +126,7 @@ As you can probably imagine, RL doesn't like those local minima and easily gets 
 
 Another flaw of RL is that it can overestimate the value of out of distribution states. That can later be exploited by the actor to go out of distribution and as we all know, a lot of spooky and weird things happen when learning goes outside of distribution. The kicker? Going out of distribution in CV means showing you a cat instead of a dog in your google search. Going out of distribution in robotics likely means a several thousand dollar mistake. Let's show this on our simple PushT task but (1) modified it such that if the agent goes outside of a zone, it dies. (2) We give it human domnstrations of the task that don't go in the red zones (remember we don't want to break our robots). (3) Plotting the value landscape shows that depending on the magic of deep learning initialization, you can end up with your model inferring high value in of the bad OOD areas. If you now deploy this policy, you might find that your robot very confidently wants to jump off a cliff. 
 
-![](/img/blog/2025-02-01-why-bc-not-rl/pusht_ood.jpeg)
+![](/img/blog/2025-01-31-why-bc-not-rl/pusht_ood.jpeg)
 TODO make this a side by side video as above.
 
 But Ignat, RL has been shown to work even without these issues! Yes, it absolutely does. The quadruped videos above are a prime example of this. You can do sim2real. You can engineer some fail safe based on classical methods. Solutions exist but they are all bandaids for the fundamental limitations of RL when applied to robots!
@@ -155,11 +155,11 @@ Let's see why by studying one of the simplest, yet impressive BC algorithms - Ac
 
 $$ J(\theta) = \| A_t - \hat{A}_t \| $$
 
-![](/img/blog/2025-02-01-why-bc-not-rl/act_arch.jpeg)
+![](/img/blog/2025-01-31-why-bc-not-rl/act_arch.jpeg)
 
 I took 200 expert demos and trained a simple ACT policy to solve PushT with 72% success rate (a big jump from RL's 0%)!
 
-<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_act.mp4" title="ACT solving PushT"></video>
+<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_act.mp4" title="ACT solving PushT"></video>
 
 Why does this work so much better, especially with such a simple algorithm? There are many answers to this question but the two ones I've found are:
 1. Supervised learning is a much easier optimization problem than RL. We have fixed targets and can use first-order optimization. Meanwhile, RL has a moving target (the value function) and uses zeroth-order optimization since we typicall assume unknown / difficult to model dynamics.
@@ -167,7 +167,7 @@ Why does this work so much better, especially with such a simple algorithm? Ther
 
 Let's demonstrate both by recreating the optimization landscape from the previous section but now with the ACT problem formulation. Looks much smoother and better behaved.
 
-<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_bc_landscape.mp4" title="ACT solving PushT"></video>
+<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_bc_landscape.mp4" title="ACT solving PushT"></video>
 
 Another exciting aspect that you should have noticed is that ACT didn't really have local minima at the point of contact! This makes BC better-posed to solve these non-cyclic tasks.
 
