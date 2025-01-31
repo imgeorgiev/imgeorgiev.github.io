@@ -54,7 +54,7 @@ While intuitively appealing, we can't use this to quantify cyclic behaviour. I a
 
 In my AHAC paper [9], I had an experiment with an Anymal quadruped running as fast as possible.
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-16by9>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/anymal.mp4" type="video/mp4">
   </video>
@@ -85,7 +85,7 @@ RL looks pretty magical so far, you can't just tell me it's bad now! In my opini
 
 The simplest example - pick and place. Can you get it to work? probably. However, it doesn't matter how many days you spend reward engineering this, RL is still going to be terrible at this task! Let's take the very well engineered [StackCube task from Maniskill3](https://maniskill.readthedocs.io/en/latest/tasks/table_top_gripper/index.html#stackcube-v1).
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-1by1>
   <video class="embed-responsive-item" controls>
     <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
   </video>
@@ -103,7 +103,7 @@ However, the focus of this blog is the PushT task. It's a contact-rich, highly n
 reward = clip(coverage / success_threshold, 0.0, 1.0)
 ```
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-1by1>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht.mp4" type="video/mp4">
   </video>
@@ -111,7 +111,7 @@ reward = clip(coverage / success_threshold, 0.0, 1.0)
 
 This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. I tried applying TD-MPC2 [8], an actor-critic approach with online planning to the task. I chose it because I thought it had the highest chance of success, but it still gets 0% success.
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-1by1>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc2.mp4" type="video/mp4">
   </video>
@@ -124,7 +124,7 @@ This is an incredibly hard task for RL to do. Why? To succeed, you need to push 
 
 Why can't RL solve it? To find out let us investigate the optimization landscape for the actor $$J(a_t) = Q(s_t, a_t)$$ where the actor is trying to find the action that maximizes the value function. Using this simple actor objective, we can take the converged critic, replay an expert demo and at each timstep state $s_t$ sample $a_t$ across the full range.
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-21by9>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape.mp4" type="video/mp4">
   </video>
@@ -134,7 +134,7 @@ Darker colors indicate high value (low loss) and light colors indicate low value
 
 This isn't actually the full story, in the optimization landscape above, I was using a fixed critic which means that my actor had a fixed objective. In practice, most algorithms like TD-MPC2 have an actor-critic architecture where the both are updated one after the other. **This means that our actor has a moving target!** From an optimization point of view, that is a disaster. Here is the disaster visualized:
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-21by9>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape_moving.mp4" type="video/mp4">
   </video>
@@ -179,7 +179,7 @@ The beautiful simplicity of BC
 
 If you've been around in robotics, you've probably noticed the new cool kid on the block - Behaviour Cloning (BC). Influential work such as Diffusion Policy [4], OpenVLA [5] and $\pi_0$ [6] did pretty incredible manipulation tasks such as folding a T-shirt or picking graps from a plastic box with a spoon directly from image observations. Meanwhile in RL we still struggle to stack cubes with priviledged state information.
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-4by3>
   <video class="embed-responsive-item" controls>
     <source src="https://dnrjl01ydafck.cloudfront.net/v3/upload/processed_collage.mp4" title="Pi-0 model from Phyiscal Intelligencce" type="video/mp4">
   </video>
@@ -197,7 +197,7 @@ $$ J(\theta) = \| A_t - \pi_\theta(o_t) \|_1 $$
 
 I took 200 expert demos and trained a simple ACT policy to solve PushT with 78% success rate (a big jump from RL's 0%)!
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-1by1>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_act.mp4" type="video/mp4">
   </video>
@@ -216,7 +216,7 @@ Why does this work so much better, especially with such a simple algorithm? Ther
 
 Let's demonstrate the convexity of the problem by plotting the policy objective over an expert demonstration again:
 
-<div class="embed-responsive">
+<div class="embed-responsive" embed-responsive-21by9>
   <video class="embed-responsive-item" controls>
     <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_bc_landscape.mp4" type="video/mp4">
   </video>
@@ -236,12 +236,38 @@ That being said, BC is SIMPLE and that is it's greatest strength. I'll leave you
 
 Out of distribution
 ================
+Wether it is a good idea or not, what works currently in robot learning is **offline training**. That is only natural for BC and RL can still be applied in the form of offline RL. However, how do they compare in terms of Out of Distribution (OOD) performance. While this is well studied in most ML domains (just add more data hehe), in robotics it is more challenging. Even if you are currently in-distribution, you can still take actions that can take you to an OOD state space. Going OOD in robotics, usually means breaking a robot or even putting humans at risk.
+
+High stakes, so how do BC and RL compare? Let's set up an imaginary experiment. Use a limited version of PushT where if the robot goes within 1/10th of the corner, it does. Assume the robot is expensive to replace. Due to that, we can't leave RL to train online, we can only collect offline data from human operators. Human operators also don't want to break the robots, so they collect demos that are within the good operating space. Then we use this data to offline train BC and RL. I collected 200 episodes and assumed that we always start in distribution (not realistic).
+
+![](/img/blog/2025-01-31-why-bc-not-rl/pusht_ood.jpeg)
+
+The case for BC is simple, as long as it stays in-distribution, it will predict correctly and continue to stay in-distribution. Naturally this gets harder as you get to more complex problems, but for our simple problem it holds surprisingly well! I re-trained ACT on this new dataset and got 84% task success rate and 2% death rate! Surprisngly, better than before! I suspect that is because I have limited my problem space and always start in-distribution. Thus, for our very simple problem BC works marvelously well!
+
+Now RL is a different topic, by problem definition, RL has to *explore* to find its optimal solution. Unfortuantely, in our imaginary problem, exploring might sometimes mean death. In the common actor-critic architecture, this phenomena is surprisngly common. Value critic incorrectly extrapolates high reward OOD, actor hasn't seen the OOD data and just predicts garbage. This results in a vicious loop of RL "confidently jumping off a cliff". Let's see this in a practical example though! Here is a visualization of the problem landscape of TD-MPC2 offline trained on this task. 
+
+<div class="embed-responsive" embed-responsive-21by9>
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc_landscape_dead.mp4" type="video/mp4">
+  </video>
+</div>
+
+The RL agent wants to jump off a cliff to its death pretty confidently. Now if this is a humanoid robot, that would be about a 6-figure mistake. In contrast, BC doesn't have this fundamental issue simply due to it's problem definition
 
 
 Conclusion
 ================
 
-Everybody wants to love RL. I want to love RL! However, I can't ignore the simple elegance and performance of modern BC. Here is a direct comparison between the optimization landscapes of RL and BC. Ask yourself, which one do you want to solve?
+Everybody wants to love RL. I want to love RL! However, I can't ignore the simple elegance and performance of modern BC. In summary these in my opinion are the pros and cons of BC vs RL:
+* :white_check_mark: Much simpler.
+* :white_check_mark: The policy objective is convex and fixed.
+* :white_check_mark: Can be optimized efficiently.
+* :white_check_mark: Tends to stay in data distribution.
+* :red_circle: Theoretically can't surpass training data perforamnce
+* :red_circle: Requires teleoperating your target robot.
+
+
+Here is a direct comparison between the optimization landscapes of RL and BC. Ask yourself, which one do you want to solve?
 
 <div class="embed-responsive">
   <video class="embed-responsive-item" controls>
@@ -257,6 +283,10 @@ There's a huge race right now with multiple industry labs and startups pushing m
 Thank you for making it this far. I hope that you learned something!
 
 If you have any comments or suggestions, [shoot me an email](mailto:ignat@imgeorgiev.com)!
+
+Something in the middle?
+================
+TODO
 
 References
 ================
