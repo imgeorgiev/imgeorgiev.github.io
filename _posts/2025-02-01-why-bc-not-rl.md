@@ -1,0 +1,206 @@
+---
+layout: post
+title: [DRAFT] Why Behaviour Cloning?
+subtitle: How BC worked where RL failed
+image: /img/blog/2025-02-01-why-bc-not-rl/bc.png
+bibliography: papers.bib
+tags: [robotics, research, long]
+header-includes:
+  - \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+  - \usepackage{amssymb}
+  - \usepackage{amsmath}
+  - \usepackage{mathtools}
+  - \usepackage{amsthm}
+---
+
+Everybody *wants* to love Reinforcement Learning (RL)! It was the 3rd most popular topic at NeurIPS 2024, just after CV and NLP 🤯! Hell, I self-identify as an RL person. However, the unfortuante reality is that RL has failed to deliver when it comes to robotics. There's a new kid on the block called Behaviour Cloning (BC) that only in a couple of years did what RL couldn't in decades. I recently did a little foray into the world of BC and now want to share what I learned.
+
+![Generated with ChatGPT](/img/blog/2025-02-01-why-bc-not-rl/bc.png)
+
+
+**Table of contents**
+* TOC
+{:toc}
+
+What can RL do?
+=================
+<!-- 
+- RL basics; why the math is elegant; roots in optimal control
+- what do we really mean with deep RL. The flaw of sample inefficiency; reduced to simulations.
+- what has actually worked - locomotion sim2real
+- these types of cyclic high-speed actions; but then can't we still solve that with classical control?
+-->
+
+Everybody *wants* to love RL! It is mathematically elegant and follows our real-world intuition. It mimics how we humans learn by trial and error and follows concepts from psychology about reward and punishment. Mathematically, RL problems are formulated as some flavor of a Markov Descision Process (MDP) where we have a state $s_t$ and action $a_t$ at time $t$ which follow some dynamics function $s_{t+1} = f(s_t, a_t)$. The mathematical goal then is to maximize a sequence of rewards given by $r(s_t, a_t)$.
+
+$$ \max_{\{a_0, .., a_T\}} J = \max_{\{a_0, .., a_T\}} \sum_{t=0}^{T} r(s_t, a_t)$$
+
+Such a beautiful formula! It is simple, general, and follows the temporal dependencies of the real-world! I can't wait to solve all of robotics with it! (me at the start of my PhD) The issue though is that this is a **very hard** equation to solve.
+
+What makes it hard, unlike the much more successful world of supervised learning, RL has nothing to tell it what's good or bad! It has to explore to find the solution, usually by sampling random actions ${a_0, .., a_T}$. This requires a lot of data. You've probably seen a couple of walking robots powered by RL such as this one:
+
+![](https://media.licdn.com/dms/image/v2/D4E22AQHEFANFi7GXuQ/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719093619338?e=2147483647&v=beta&t=o4xCJRw-HpQhGCvYluGUzA8Hvpp_-Di8JwY7NdxeTy8)
+
+If you follow the origin work of this [1] you'll quickly realize that these RL models need the order of ~$10^9$ data samples to work! That is ~231 robot days of data. The kicker? Since RL has to explore, most of this data is the robot falling over. This has limited RL only to digital worlds, environments or what we call in robotics - simulation. This opens Pandora's box - how do we make our simulations fast? how do we make them accurate? how do we transfer policies from simulation to the real world? None the less, a lot of amazing research has addressed many of these questions and now we have pretty well performing robots!
+
+
+[![DEEP Robotics](https://img.youtube.com/vi/yPFXBLavoro/0.jpg)](https://www.youtube.com/watch?v=yPFXBLavoro "DEEP Robotics")
+
+(OK that was actually pretty cool)
+
+These tasks that RL does really well is what I call **cyclic tasks** (let me know if there is a more established term!) What describes a cyclic behaviour? From control theory, the trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $\argmax(J) = \{A, A, A, ...\}$.
+
+While intuitively appealing, we can't use this to quantify cyclic behaviour. I am not sure what we can use, but I found two patterns - (1) stable value functions and (2) convex objectives after stochastic smoothing.
+
+In my [AHAC paper](https://adaptive-horizon-actor-critic.github.io/), I had an experiment with an Anymal quadruped running as fast as possible. TODO make just anymal visible.
+
+<video id="dflex" autoplay muted loop playsinline>
+  <source src="/img/pwm/dflex.mp4" type="video/mp4">
+</video>
+
+If we now take the critic of converged AHAC on this task (or any critic really) and plot the value function with respect to time, we see that the value function converges around a single value. The converged value will vary per algorithm and parametarization but this is one common pattern of cyclic tasks.
+
+$$ V(s_t) = \mathbb{E} \bigg[ \sum_{t'=t}^{T} \gamma r(s_{t'}, a_{t'}) \bigg] $$
+
+![](/img/blog/2025-02-01-why-bc-not-rl/value.png)
+
+The second common pattern I found is that these cyclic tasks appear convex after stochastic smoothing ([see What makes RL tick](https://www.imgeorgiev.com/2024-03-15-stochastic-rl/)). Below I take the converged and optimal Anymal running policy, select a **single parameter** from the actor neural network and change it to get a pseudo-optimization landscape for the problem.
+
+![](/img/blog/2025-02-01-why-bc-not-rl/anymal_landscape.jpeg)
+TODO update so that it's cleaner and has only the blue plot. Also TODO apply stochastic smooethingf
+
+While this landscape is absolutely not convex, if you apply sufficient smoothing to it, it becomes pretty easy to solve for most RL algorithms. This stochastic smoothing is what has enabled RL to do what classical control hasn't been able to. All cyclic tasks I've seen exhibit good convexity after smoothing.
+
+
+What can RL not do?
+=================
+<!-- 
+- sequentally convex tasks; give little sketch; introduce pusht task
+- staying within distribution; give little sketch
+- multi-task scaling to robot foundational models; noise in value function -->
+
+RL looks pretty magical so far, you can't just tell me it's bad now! In my opinion RL has 2 flaws that severely limit it.
+1. It is bad at non-cyclic tasks or ones that it can't convexify.
+2. Due to it's formulation it cannot stay within its data distribution which makes it unsafe for real-world deployment.
+
+
+### Non-cyclic tasks
+
+RL is terrible at non-cyclic tasks! The simplest example - pick and place. Can you get it to work? probably. However, it doesn't matter how many days you spend reward engineering this, RL is still going to be terrible at this task! Let's take the very well engineered [StackCube task from Maniskill3](https://maniskill.readthedocs.io/en/latest/tasks/table_top_gripper/index.html#stackcube-v1).
+
+<video id="dflex" autoplay muted loop playsinline>
+  <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
+</video>
+
+Their [reward function](https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/stack_cube.py#L145) is a whopping 36 lines of code! They have 3 mode of reward (1) bring robot arm to cube to pick, (2) grasp cube on put on top of other cube and (3) ungrasp cube on top of the other cube. Here is a scetch of how I *think* that translates to a value function over time.
+
+![](/img/blog/2025-02-01-why-bc-not-rl/cube_value.jpeg)
+TODO actually get from data.
+
+That looks significantly less straightforward to solve. Imagine you're an RL algorithm osciliating between those different states of the task. As you can imagine that create a significantly more challening optimization landscape. TODO actually get that from benchmark.
+
+I also want to show another non-cyclic task, probably a personal favourite of mine - the PushT task. It's a contact-rich, highly non-convex task where a robot mush push a T-shaped object into a goal pose. The success critera is 95% overlap and the most straightforward reward is:
+
+```
+reward = clip(coverage / success_threshold, 0.0, 1.0)
+```
+
+<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht.mp4" title="PushT"></video>
+
+This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. Here is TD-MPC2, one of the best possible algorithms for this task doing its best
+
+<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_tdmpc2.mp4" title="PushT"></video>
+
+Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at each timstep state $s_t$ sampled $a_t$ across the full range and used them to obtain the TD-MPC2 value function $Q(s_t, a_t)$. As you can see the value landscape has very distinct local minima:
+
+<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_tdmpc_landscape.mp4" title="PushT"></video>
+
+As you can probably imagine, RL doesn't like those local minima and easily gets stuck in them. Matter of fact, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task. [3]
+
+<details>
+  It might be possible to engineer a better reward to solve the task, but that is a seperate bucket of issues. [Maniskill3 tried that with some success.](/https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/push_t.py). While possible, I want you to ponder the question, is this really the right toolbox for this task?
+</details>
+
+
+### Out of distribution
+
+Another flaw of RL is that it can overestimate the value of out of distribution states. That can later be exploited by the actor to go out of distribution and as we all know, a lot of spooky and weird things happen when learning goes outside of distribution. The kicker? Going out of distribution in CV means showing you a cat instead of a dog in your google search. Going out of distribution in robotics likely means a several thousand dollar mistake. Let's show this on our simple PushT task but (1) modified it such that if the agent goes outside of a zone, it dies. (2) We give it human domnstrations of the task that don't go in the red zones (remember we don't want to break our robots). (3) Plotting the value landscape shows that depending on the magic of deep learning initialization, you can end up with your model inferring high value in of the bad OOD areas. If you now deploy this policy, you might find that your robot very confidently wants to jump off a cliff. 
+
+![](/img/blog/2025-02-01-why-bc-not-rl/pusht_ood.jpeg)
+TODO make this a side by side video as above.
+
+But Ignat, RL has been shown to work even without these issues! Yes, it absolutely does. The quadruped videos above are a prime example of this. You can do sim2real. You can engineer some fail safe based on classical methods. Solutions exist but they are all bandaids for the fundamental limitations of RL when applied to robots!
+
+
+
+The beautiful simplicity of BC
+================
+
+<!-- 
+- introduce simplified ACT
+- data pipeline of behaviour cloning
+- how it solves sequentially convex tasks
+- BC still has it's limitations: OOD is still an issue. It theoretically can't get the optimal policy. But it's darn simple -->
+
+If you've been around in robotics, you've probably noticed the new cool kid on the block - Behaviour Cloning (BC). Influential work such as Diffusion Policy [4], OpenVLA [5] and $\pi_0$ [6] did pretty incredible manipulation tasks such as folding a T-shirt or picking graps from a plastic box with a spoon directly from image observations. Meanwhile in RL we still struggle to stack cubes with priviledged state information.
+
+<video controls src="https://dnrjl01ydafck.cloudfront.net/v3/upload/processed_collage.mp4" title="Pi-0 model from Phyiscal Intelligencce"></video>
+
+Why does BC work where RL hasn't? I think it's manily due to two reason (1) it's simple and (2) supervised learning is an easier problem to optimize over.
+Let's see why by studying one of the simplest, yet impressive BC algorithms - Action Chunking Transformer (ACT) [7]. It's super simple!
+1. Collect some expert demonstration data (usually via teleoperation).
+2. Get observation from observation $o_t$ from your offline dataset.
+3. Tokenize images with a pre-trained ResNet. Tokenize state data with an MLP.
+4. Feed both into a transformer encoder and predict a trajectory $\hat{A}_t = \pi(o_t)$ and train it to regress some ground truth (expert data) using supervised learning:
+
+$$ J(\theta) = \| A_t - \hat{A}_t \| $$
+
+![](/img/blog/2025-02-01-why-bc-not-rl/act_arch.jpeg)
+
+I took 200 expert demos and trained a simple ACT policy to solve PushT with 72% success rate (a big jump from RL's 0%)!
+
+<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_act.mp4" title="ACT solving PushT"></video>
+
+Why does this work so much better, especially with such a simple algorithm? There are many answers to this question but the two ones I've found are:
+1. Supervised learning is a much easier optimization problem than RL. We have fixed targets and can use first-order optimization. Meanwhile, RL has a moving target (the value function) and uses zeroth-order optimization since we typicall assume unknown / difficult to model dynamics.
+2. A well-trained BC algorithm does it's very best to stay in its data distribution. It is trained to predict trajectories it has already seen in its data and these trajectories lead it to an in-distribution state space. Meanwhile, RL is perfectly incentivized to go on a wild goose chase for an imaginary higher value.
+
+Let's demonstrate both by recreating the optimization landscape from the previous section but now with the ACT problem formulation. Looks much smoother and better behaved.
+
+<video controls src="/img/blog/2025-02-01-why-bc-not-rl/pusht_bc_landscape.mp4" title="ACT solving PushT"></video>
+
+Another exciting aspect that you should have noticed is that ACT didn't really have local minima at the point of contact! This makes BC better-posed to solve these non-cyclic tasks.
+
+That being said, BC isn't perfect and it has it's issues:
+1. You need to manually collect expensive teleoperation data. That being said, this is still cheaper than RL breaking your robot.
+2. By mathematical definition, BC can't do better than the demonstrations given. But hey, suboptimal is better than complete failure.
+
+
+That being said, BC is SIMPLE and that is it's greatest strength. I'll leave you with a quote from a friend
+
+> You can probably theoretically do everything that BC does with classical robotics methods. However, that would need a huge team of people collaborating for years to get any reasonable for of generalisability. Meanwhile, BC can achieve the same results with 3 people and a couple of weeks. The best part? Solving new tasks just involves adding more data! 
+
+
+Conclusion
+================
+
+Everybody wants to love RL. I want to love RL! However, I can't ignore the simple elegance and performance of modern BC. There's a huge race right now with multiple industry labs and startups pushing multi-task BC methods do their limits. The next few years will be excitign to say the least! Who knows, maybe RL will make a come back just like it did with ChatGPT. It's an exciting time to be in robotics!
+
+Thank you for making it this far. I hope that you learned something!
+
+If you have any comments or suggestions, [shoot me an email](mailto:ignat@imgeorgiev.com)!
+
+References
+================
+
+  
+* [1] [Rudin et al. Learning to Walk in Minutes Using Massively Parallel Deep Reinforcement Learning](https://arxiv.org/abs/2109.11978)
+* [2] [Christopher et al. Limit Cycles of Differential Equations](https://link.springer.com/book/10.1007/978-3-030-59656-9)
+* [3] [Zhou et al. DINO-WM: World Models on Pre-trained Visual Features enable Zero-shot Planning](https://arxiv.org/abs/2411.04983)
+* [4] Diffusion Policy
+* [5] OpenVLA
+* [6] Pi0
+* [7] ACT
+* [8] [Georgiev et al., Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation](https://adaptive-horizon-actor-critic.github.io/)
+
+
