@@ -48,15 +48,17 @@ If you follow the origin work of this [1] you'll quickly realize that these RL m
 
 (OK that was actually pretty cool)
 
-These tasks that RL does really well is what I call **cyclic tasks** (let me know if there is a more established term!) What describes a cyclic behaviour? From control theory, the trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $\argmax(J) = \{A, A, A, ...\}$.
+These tasks that RL does really well is what I call **cyclic tasks** (let me know if there is a more established term!) What describes a cyclic behaviour? From control theory, the trajectory converges to a closed loop (cycle) regardless of initial conditions. Mathemtically, you have an optimal trajectory $A=\{a_0, a_1, a_2, .., a_H\}$ that is sufficient to solve the task i.e. $$\argmax(J) = \{A, A, A, ...\}$$.
 
 While intuitively appealing, we can't use this to quantify cyclic behaviour. I am not sure what we can use, but I found two patterns - (1) stable value functions and (2) convex objectives after stochastic smoothing.
 
 In my [AHAC paper](https://adaptive-horizon-actor-critic.github.io/), I had an experiment with an Anymal quadruped running as fast as possible. TODO make just anymal visible.
 
-<video id="dflex" autoplay muted loop playsinline>
-  <source src="/img/pwm/dflex.mp4" type="video/mp4">
-</video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/anymal.mp4" type="video/mp4">
+  </video>
+</div>
 
 If we now take the critic of converged AHAC on this task (or any critic really) and plot the value function with respect to time, we see that the value function converges around a single value. The converged value will vary per algorithm and parametarization but this is one common pattern of cyclic tasks.
 
@@ -88,16 +90,17 @@ RL looks pretty magical so far, you can't just tell me it's bad now! In my opini
 
 RL is terrible at non-cyclic tasks! The simplest example - pick and place. Can you get it to work? probably. However, it doesn't matter how many days you spend reward engineering this, RL is still going to be terrible at this task! Let's take the very well engineered [StackCube task from Maniskill3](https://maniskill.readthedocs.io/en/latest/tasks/table_top_gripper/index.html#stackcube-v1).
 
-<video id="dflex" autoplay muted loop playsinline>
-  <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
-</video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
+  </video>
+</div>
 
-Their [reward function](https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/stack_cube.py#L145) is a whopping 36 lines of code! They have 3 mode of reward (1) bring robot arm to cube to pick, (2) grasp cube on put on top of other cube and (3) ungrasp cube on top of the other cube. Here is a scetch of how I *think* that translates to a value function over time.
+Their [reward function](https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/stack_cube.py#L145) is a whopping 36 lines of code! They have 3 modes of reward (1) bring robot arm to cube to pick, (2) grasp cube on put on top of other cube and (3) ungrasp cube on top of the other cube. Here is a scetch of how I *think* that translates to a value function over time.
 
 ![](/img/blog/2025-01-31-why-bc-not-rl/cube_value.jpeg)
-TODO actually get from data.
 
-That looks significantly less straightforward to solve. Imagine you're an RL algorithm osciliating between those different states of the task. As you can imagine that create a significantly more challening optimization landscape. TODO actually get that from benchmark.
+That looks significantly less straightforward to solve. Imagine you're an RL algorithm osciliating between those different states of the task. As you can imagine that create a significantly more challening optimization landscape.
 
 I also want to show another non-cyclic task, probably a personal favourite of mine - the PushT task. It's a contact-rich, highly non-convex task where a robot mush push a T-shaped object into a goal pose. The success critera is 95% overlap and the most straightforward reward is:
 
@@ -105,11 +108,19 @@ I also want to show another non-cyclic task, probably a personal favourite of mi
 reward = clip(coverage / success_threshold, 0.0, 1.0)
 ```
 
-<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht.mp4" title="PushT"></video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht.mp4" type="video/mp4">
+  </video>
+</div>
 
 This is an incredibly hard task for RL to do. Why? To succeed, you need to push from different positions, which means making or breaking contact. However, a typical RL value function will tell us that the highest value is to stay close to the T. In other words, RL gets stuck in the natural local minima of the task. Here is TD-MPC2, one of the best possible algorithms for this task doing its best
 
-<video controls src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc2.mp4" title="PushT"></video>
+<div class="embed-responsive embed-responsive-16by9">
+  <video class="embed-responsive-item" controls>
+    <source src="/img/blog/2025-01-31-why-bc-not-rl/pusht_tdmpc2.mp4" type="video/mp4">
+  </video>
+</div>
 
 Ok, so why can't TD-MPC2 solve it? To find out, I replayed an expert demo and at each timstep state $s_t$ sampled $a_t$ across the full range and used them to obtain the TD-MPC2 value function $Q(s_t, a_t)$. As you can see the value landscape has very distinct local minima:
 
