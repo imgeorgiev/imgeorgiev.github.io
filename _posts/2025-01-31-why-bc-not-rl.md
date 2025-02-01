@@ -45,10 +45,7 @@ If you follow the origin work of this [1] you'll quickly realize that these RL m
 
 
 <div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" 
-    src="https://www.youtube.com/watch?v=yPFXBLavoro" 
-    allowfullscreen>
-  </iframe>
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/yPFXBLavoro?rel=0" allowfullscreen></iframe>
 </div>
 
 (OK that was actually pretty cool)
