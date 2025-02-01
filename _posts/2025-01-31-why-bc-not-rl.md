@@ -44,7 +44,12 @@ What makes it hard, unlike the much more successful world of supervised learning
 If you follow the origin work of this [1] you'll quickly realize that these RL models need the order of ~$10^9$ data samples to work! That is ~231 robot days of data. The kicker? Since RL has to explore, most of this data is the robot falling over. This has limited RL only to simulation. This opens Pandora's box - how do we make our simulations fast? how do we make them accurate? how do we transfer policies from simulation to the real world? None the less, a lot of amazing research has addressed many of these questions and now we have pretty well performing robots!
 
 
-[![DEEP Robotics](https://img.youtube.com/vi/yPFXBLavoro/0.jpg)](https://www.youtube.com/watch?v=yPFXBLavoro "DEEP Robotics")
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" 
+    src="https://www.youtube.com/watch?v=yPFXBLavoro" 
+    allowfullscreen>
+  </iframe>
+</div>
 
 (OK that was actually pretty cool)
 
@@ -66,10 +71,14 @@ $$ V(s_t) = \mathbb{E} \bigg[ \sum_{t'=t}^{T} \gamma r(s_{t'}, a_{t'}) \bigg] $$
 
 ![](/img/blog/2025-01-31-why-bc-not-rl/value.png)
 
-The second common pattern I found is that these cyclic tasks appear convex after stochastic smoothing (see [What makes RL tick](https://www.imgeorgiev.com/2024-03-15-stochastic-rl/)). Below I take the converged and optimal Anymal running policy, select a **single parameter** from the actor neural network and change it to get a pseudo-landscape for the problem.
+The second common pattern I found is that these cyclic tasks appear convex after stochastic smoothing (see [What makes RL tick](https://www.imgeorgiev.com/2024-03-15-stochastic-rl/)). Below I take the converged and optimal Anymal running policy, select a **single parameter** from the actor neural network and change it to get a pseudo-landscape for the problem. The orange line is a sketch of what the landscape looks like after stochastic smoothing.
 
 ![](/img/blog/2025-01-31-why-bc-not-rl/anymal_landscape.jpeg)
-TODO update so that it's cleaner and has only the blue plot. Also TODO apply stochastic smoothing
+
+<details>
+  <summary>Disclaimer</summary>
+  I had the original figure somewhere but have misplaced it so I just hand-made a sketch of what the smooth landscape looks like from memory.
+</details>
 
 While this landscape is absolutely not convex, if you apply sufficient smoothing to it, it becomes pretty easy to solve for most RL algorithms. This stochastic smoothing is what has enabled RL to do what classical control hasn't been able to. All cyclic tasks I've seen exhibit good convexity after smoothing.
 
@@ -130,7 +139,7 @@ Why can't RL solve it? To find out let us investigate the optimization landscape
   </video>
 </div>
 
-Darker colors indicate high value (low loss) and light colors indicate low value (high loss). The cross is the action taken in the dataset. Pause and replay the video. Observe the times at which the agent has to break contact and go away from the object. These actions form local minima from which RL struggles to escape. Here I want to highlight that this isn't an issue with TD-MPC2. Matter of fact, the best RL algrotihms, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task [3]. I think it is a mismatch between the RL problem formulation and the task at hand.
+Darker colors indicate high value (low loss) and light colors indicate low value (high loss). The cross is the action taken in the dataset. Pause and replay the video. Observe the times at which the agent has to **break contact** and go away from the object. **These actions form local minima from which RL struggles to escape!** Here I want to highlight that this isn't an issue with TD-MPC2. Matter of fact, the best RL algrotihms, PPO, DreamerV3 and TD-MPC2 all can't solve this seemingly simple task [3]. I think it is a mismatch between the RL problem formulation and the task at hand.
 
 This isn't actually the full story, in the optimization landscape above, I was using a fixed critic which means that my actor had a fixed objective. In practice, most algorithms like TD-MPC2 have an actor-critic architecture where the both are updated one after the other. **This means that our actor has a moving target!** From an optimization point of view, that is a disaster. Here is the disaster visualized:
 
@@ -145,7 +154,7 @@ This isn't actually the full story, in the optimization landscape above, I was u
   This experiment was designed to show the moving actor objective throughout the lifetime of an RL learning loop. By lifetime I mean from policy initialization to policy convergence. In this experiment I start with an untrained TD-MPC2 and at t=25,50,75 I load TD-MPC2 weights that represent different stages of convergence. The weights at t=75 are full converged. You can see that each consequitive set of weights has more optimal value function. Unfortunately, this still doesn't help the algorithm escape the natural local minima of the problem.
 </details>
 
-This don't look too good for RL, but there is yet one more issue. RL optimization is just painfully inefficient because we're stuck with zeroth-order graidents [10]. Since we usually assume that the environment is unknown, we can't compute gradients and we are limited to only TD learning approaches. They work, they just require a lot of data! Interestingly enough, even if we can learn the environment dynamics, that still doesn't help us learn a value function faster [11].
+This don't look too good for RL, but there is yet one more issue. RL optimization is just painfully inefficient because it uses zeroth-order graidents [10]. Since we usually assume that the environment is unknown, we can't compute gradients and we are limited to only TD learning approaches. They work, they just require a lot of data! Interestingly enough, even if we can learn the environment dynamics, that still doesn't help us learn a value function faster [11].
 
 In summary, the **fundemental issues with RL** are:
 1. It is bad at non-cyclic tasks due to the natural local minima of the tasks.
@@ -193,6 +202,8 @@ Why does BC work where RL hasn't? I think it's manily due to two reason (1) it's
 
 $$ J(\theta) = \| A_t - \pi_\theta(o_t) \|_1 $$
 
+Here is my sketch of the super simple architecture:
+
 ![](/img/blog/2025-01-31-why-bc-not-rl/act_arch.jpeg)
 
 I took 200 expert demos and trained a simple ACT policy to solve PushT with 78% success rate (a big jump from RL's 0%)!
@@ -210,7 +221,7 @@ I took 200 expert demos and trained a simple ACT policy to solve PushT with 78% 
 
 
 Why does this work so much better, especially with such a simple algorithm? There are many answers to this question but I think BC elegantly addresses the issues I mentioned before with RL:
-1. By problem definition, the objective is fully convex.
+1. The objective is fully convex.
 2. The objective is fixed.
 3. The objective can be optimized efficiently with standard first-order gradient optimizaiton. 
 
@@ -236,15 +247,15 @@ That being said, BC is SIMPLE and that is it's greatest strength. I'll leave you
 
 Out of distribution
 ================
-Wether it is a good idea or not, what works currently in robot learning is **offline training**. That is only natural for BC and RL can still be applied in the form of offline RL. However, how do they compare in terms of Out of Distribution (OOD) performance. While this is well studied in most ML domains (just add more data hehe), in robotics it is more challenging. Even if you are currently in-distribution, you can still take actions that can take you to an OOD state space. Going OOD in robotics, usually means breaking a robot or even putting humans at risk.
+Wether it is a good idea or not, what works currently in robot learning is **offline training**. That is only natural for BC and RL can still be applied in the form of offline RL. However, how do they compare in terms of Out of Distribution (OOD) performance. While this is well studied in most ML domains, in robotics it is more challenging. Even if you are currently in-distribution, you can still take actions that can take you to an OOD state space. Going OOD in robotics, usually means breaking a robot or even putting humans at risk.
 
-High stakes, so how do BC and RL compare? Let's set up an imaginary experiment. Use a limited version of PushT where if the robot goes within 1/10th of the corner, it does. Assume the robot is expensive to replace. Due to that, we can't leave RL to train online, we can only collect offline data from human operators. Human operators also don't want to break the robots, so they collect demos that are within the good operating space. Then we use this data to offline train BC and RL. I collected 200 episodes and assumed that we always start in distribution (not realistic).
+High stakes! How do BC and RL compare? Let's set up an imaginary experiment. Use a limited version of PushT where if the robot goes within 1/10th of the corner, it does. Assume the robot is expensive to replace. Due to that, we can't leave RL to train online, we can only collect offline data from human operators. Human operators also don't want to break the robots, so they collect demos that are within the good operating space. Then we use this data to offline train BC and RL. I collected 200 episodes and assumed that we always start in distribution (not realistic).
 
 ![](/img/blog/2025-01-31-why-bc-not-rl/pusht_ood.jpeg)
 
 The case for BC is simple, as long as it stays in-distribution, it will predict correctly and continue to stay in-distribution. Naturally this gets harder as you get to more complex problems, but for our simple problem it holds surprisingly well! I re-trained ACT on this new dataset and got 84% task success rate and 2% death rate! Surprisngly, better than before! I suspect that is because I have limited my problem space and always start in-distribution. Thus, for our very simple problem BC works marvelously well!
 
-Now RL is a different topic, by problem definition, RL has to *explore* to find its optimal solution. Unfortuantely, in our imaginary problem, exploring might sometimes mean death. In the common actor-critic architecture, this phenomena is surprisngly common. Value critic incorrectly extrapolates high reward OOD, actor hasn't seen the OOD data and just predicts garbage. This results in a vicious loop of RL "confidently jumping off a cliff". Let's see this in a practical example though! Here is a visualization of the problem landscape of TD-MPC2 offline trained on this task. 
+Now RL is a different topic, by problem definition, RL has to *explore* to find its optimal solution. Unfortuantely, in our imaginary problem, exploring might sometimes mean death. In the common actor-critic architecture, this phenomena is surprisngly common. Value critic incorrectly extrapolates high reward OOD, actor hasn't seen the OOD data and just predicts garbage. This results in a vicious loop of RL *confidently jumping off a cliff*. Let's see this in a practical example though! Here is a visualization of the problem landscape of TD-MPC2 offline trained on this task. 
 
 <div class="embed-responsive embed-responsive-21by9">
   <video class="embed-responsive-item" controls>
@@ -252,20 +263,19 @@ Now RL is a different topic, by problem definition, RL has to *explore* to find 
   </video>
 </div>
 
-The RL agent wants to jump off a cliff to its death pretty confidently. Now if this is a humanoid robot, that would be about a 6-figure mistake. In contrast, BC doesn't have this fundamental issue simply due to it's problem definition
+The RL agent wants to jump off a cliff to its death pretty confidently. In my experiment, I still got 0% success rate and 68% death rate over 50 evals. Now if this is a humanoid robot, that would be about a 6-figure mistake. In contrast, BC doesn't have this fundamental issue simply due to it's problem definition
 
 
 Conclusion
 ================
 
 Everybody wants to love RL. I want to love RL! However, I can't ignore the simple elegance and performance of modern BC. In summary these in my opinion are the pros and cons of BC vs RL:
-* :white_check_mark: Much simpler.
-* :white_check_mark: The policy objective is convex and fixed.
-* :white_check_mark: Can be optimized efficiently.
-* :white_check_mark: Tends to stay in data distribution.
-* :red_circle: Theoretically can't surpass training data perforamnce
-* :red_circle: Requires teleoperating your target robot.
-
+* ✅ Much simpler.
+* ✅ The policy objective is convex and fixed.
+* ✅ Can be optimized efficiently.
+* ✅ Tends to stay in data distribution.
+* ❌ Theoretically can't surpass training data performance. Thus theoretically can't achieve optimal behaviour.
+* ❌ Requires teleoperating your target robot.
 
 Here is a direct comparison between the optimization landscapes of RL and BC. Ask yourself, which one do you want to solve?
 
@@ -284,9 +294,9 @@ Thank you for making it this far. I hope that you learned something!
 
 If you have any comments or suggestions, [shoot me an email](mailto:ignat@imgeorgiev.com)!
 
-Something in the middle?
+<!-- Something in the middle?
 ================
-TODO
+TODO -->
 
 References
 ================
