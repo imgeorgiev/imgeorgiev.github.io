@@ -17,7 +17,7 @@ Everybody *wants* to love Reinforcement Learning (RL)! It was the 3rd most popul
 
 Lately, a new contender—**Behavior Cloning (BC)**—has swooped in and casually solved tasks that have stumped RL for decades. I recently dipped my toes into BC and want to share why I think it succeeds in tasks where RL fails.
 
-![Generated with ChatGPT](/img/blog/2025-01-31-why-bc-not-rl/bc.png)
+![Generated with ChatGPT](/img/blog/2025-01-31-why-bc-not-rl/bc.png){: width="50%" style="display: block; margin: auto;"}
 
 
 **Table of contents**
@@ -41,7 +41,7 @@ When RL works, it’s *glorious*. It is simple, general, and follows the tempora
 
 Unlike supervised learning, RL must handle temporal dependencies and explore by sampling random trajectories $$\{ a_0, .., a_T \}$$, which often requires vast amounts of data. You've probably seen walking robots powered by RL, such as this one:
 
-![](https://media.licdn.com/dms/image/v2/D4E22AQHEFANFi7GXuQ/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719093619338?e=2147483647&v=beta&t=o4xCJRw-HpQhGCvYluGUzA8Hvpp_-Di8JwY7NdxeTy8)
+![](https://media.licdn.com/dms/image/v2/D4E22AQHEFANFi7GXuQ/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719093619338?e=2147483647&v=beta&t=o4xCJRw-HpQhGCvYluGUzA8Hvpp_-Di8JwY7NdxeTy8){: width="50%" style="display: block; margin: auto;"}
 
 If you follow the origin work of this [1], you'll quickly realize that these RL models need the order of ~$10^10$ data samples to work! That is ~2314 robot days of data! Much of that data is the robot falling over, so real-world experiments become costly and risky. Hence, RL is typically restricted to simulation, which triggers questions of how to speed up sim, how to ensure it is accurate, and how to do sim-to-real transfer. None the less, a lot of amazing research has addressed many of these questions, and now we have pretty well performing robots!
 
@@ -66,11 +66,11 @@ In my own AHAC paper [9], we had a quadruped running as fast as possible. Once t
 
 $$ V(s_t) = \mathbb{E} \bigg[ \sum_{t'=t}^{T} \gamma r(s_{t'}, a_{t'}) \bigg] $$
 
-![](/img/blog/2025-01-31-why-bc-not-rl/value.png)
+![](/img/blog/2025-01-31-why-bc-not-rl/value.png){: style="display: block; margin: auto;"}
 
 The second common pattern I found is that these cyclic tasks appear convex after stochastic smoothing (see my other blog post [What makes RL tick](https://www.imgeorgiev.com/2024-03-15-stochastic-rl/)). Below, I take the converged optimal Anymal running policy, select a **single parameter** from the actor neural network, and change it to get a pseudo-landscape for the problem. The orange line is a sketch of what the landscape looks like after stochastic smoothing.
 
-![](/img/blog/2025-01-31-why-bc-not-rl/anymal_landscape.jpeg)
+![](/img/blog/2025-01-31-why-bc-not-rl/anymal_landscape.jpeg){: width="60%" style="display: block; margin: auto;"}
 
 <details>
   <summary>Disclaimer</summary>
@@ -91,15 +91,18 @@ Though RL can seem magical, in my opinion, it’s terrible at **non-cyclic tasks
 
 The simplest example is pick and place. Can you get it to work? *Probably.* However, it doesn't matter how many days you spend reward engineering this; RL is still going to be terrible at this task! Let's take the very well engineered [StackCube task from Maniskill3](https://maniskill.readthedocs.io/en/latest/tasks/table_top_gripper/index.html#stackcube-v1).
 
-<div class="embed-responsive embed-responsive-1by1">
-  <video class="embed-responsive-item" controls>
-    <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
-  </video>
+
+<div style="max-width: 400px; margin: 0 auto;">
+  <div class="embed-responsive embed-responsive-1by1">
+    <video class="embed-responsive-item" controls style="width: 100%;">
+      <source src="https://github.com/haosulab/ManiSkill/raw/main/figures/environment_demos/StackCube-v1_rt.mp4" type="video/mp4">
+    </video>
+  </div>
 </div>
 
 Their [reward function](https://github.com/haosulab/ManiSkill/blob/main/mani_skill/envs/tasks/tabletop/stack_cube.py#L145) is a whopping 36 lines of code! They have 3 modes of reward: (1) bring robot arm to cube to pick, (2) grasp cube on put on top of other cube, and (3) ungrasp cube. Here is a sketch of how I *think* that translates to a value function over time.
 
-![](/img/blog/2025-01-31-why-bc-not-rl/cube_value.jpeg)
+![](/img/blog/2025-01-31-why-bc-not-rl/cube_value.jpeg){: width="80%" style="display: block; margin: auto;"}
 
 That looks significantly less straightforward to solve. Imagine you're an RL algorithm oscillating between those different states of the task. As you can imagine, that creates a significantly more challenging optimization landscape.
 
