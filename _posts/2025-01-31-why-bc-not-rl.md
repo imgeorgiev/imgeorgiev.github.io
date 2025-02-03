@@ -43,7 +43,7 @@ Unlike supervised learning, RL must contend with temporal dependencies and relie
 
 ![](https://media.licdn.com/dms/image/v2/D4E22AQHEFANFi7GXuQ/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719093619338?e=2147483647&v=beta&t=o4xCJRw-HpQhGCvYluGUzA8Hvpp_-Di8JwY7NdxeTy8){: width="50%" style="display: block; margin: auto;"}
 
-Seminal work [1] shows that these RL models may require on the order of ~$10^10$ data samples to work! That is ~2314 robot days of data! Much of that data is the robot falling over, so real-world experiments become costly and risky. Consequently, RL is typically confined to simulation, which brings its own challenges such as accelerating simulation time, ensuring its fidelity, and achieving successful sim-to-real transfer. Nevertheless, extensive research has addressed many of these hurdles, and we now see increasingly capable robots in practice.
+Seminal work [1] shows that these RL models may require on the order of ~$10^{10}$ data samples to work! That is ~2314 robot days of data! Much of that data is the robot falling over, so real-world experiments become costly and risky. Consequently, RL is typically confined to simulation, which brings its own challenges such as accelerating simulation time, ensuring its fidelity, and achieving successful sim-to-real transfer. Nevertheless, extensive research has addressed many of these hurdles, and we now see increasingly capable robots in practice.
 
 
 <div class="embed-responsive embed-responsive-16by9">
