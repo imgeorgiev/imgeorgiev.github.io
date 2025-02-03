@@ -179,7 +179,7 @@ The beautiful simplicity of BC
 - how it solves sequentially convex tasks
 - BC still has it's limitations: OOD is still an issue. It theoretically can't get the optimal policy. But it's darn simple -->
 
-If you’ve been around robotics, you’ve likely encountered the new cool kid on the block—**Behavior Cloning (BC)**. Influential work like Diffusion Policy [4], OpenVLA [5], and $\pi_0$ [6] has achieved impressive manipulation tasks—such as folding T-shirts or picking up grapes from a plastic box with a spoon—directly from image observations. Meanwhile, RL still struggles with tasks like stacking cubes even when given privileged state information.
+If you’ve been around robotics, you’ve likely encountered the new cool kid on the block—**Behavior Cloning (BC)**. While BC isn't entirely new ([see this 1989 paper](https://www.ri.cmu.edu/pub_files/pub3/pomerleau_dean_1991_1/pomerleau_dean_1991_1.pdf)), recent influential work like Diffusion Policy [4], OpenVLA [5], and $\pi_0$ [6] has achieved impressive manipulation tasks—such as folding T-shirts or picking up grapes from a plastic box with a spoon—directly from image observations. Meanwhile, RL still struggles with tasks like stacking cubes even when given privileged state information.
 
 <div class="embed-responsive embed-responsive-4by3">
   <video class="embed-responsive-item" controls>
@@ -258,7 +258,7 @@ RL, on the other hand, faces a tougher challenge. By its nature, **RL must explo
   </video>
 </div>
 
-Similar to before, darker colors indicate higher value (lower loss) and darker colors indicate low value (high loss). The red line indicate the death zone. The RL agent wants to go towards the dark regions and thus confidently jump off a cliff to its death. In my experiment, the RL approach achieved a 0% success rate and a 68% death rate over 50 evaluation episodes—a disastrous outcome that, if applied to a humanoid robot, could translate to six-figure losses.
+Similar to before, darker colors indicate higher value (lower loss) and lighter colors indicate low value (high loss). The red line indicate the death zone. The RL agent wants to go towards the dark regions and thus confidently jump off a cliff to its death. In my experiment, the RL approach achieved a 0% success rate and a 68% death rate over 50 evaluation episodes—a disastrous outcome that, if applied to a humanoid robot, could translate to six-figure losses.
 
 
 Conclusion
@@ -285,6 +285,10 @@ There's a huge race right now with multiple industry labs and startups pushing m
 Thank you for making it this far. I hope that you learned something!
 
 If you have any comments or suggestions, [shoot me an email](mailto:ignat@imgeorgiev.com)!
+
+Here are also some **additional resources** on this topic:
+1. Sergey Levine's [lecture on supervised learning](https://rail.eecs.berkeley.edu/deeprlcourse/deeprlcourse/static/slides/lec-2.pdf) - sligthly updated but a great tutorial from the basics.
+2. Abhishek Gupta's [lecture on RL](https://courses.cs.washington.edu/courses/cse542/24sp/lectures/Lecture2_supervised_updated_Sp24.pdf) - connects BC and RL nicely and comments on the issues of offline learning in robotics.
 
 <!-- Something in the middle?
 ================
