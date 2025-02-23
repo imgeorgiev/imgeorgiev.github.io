@@ -92,29 +92,27 @@ datacampcourse: true
                   <a target="_blank" href="https://www.nicklashansen.com/">Nicklas
                     Hansen</a><sup>2</sup>,</span>
                 <span class="author-block">
-                  <a target="_blank" href="https://animesh.garg.tech/">Animesh Garg</a><sup>1,
-                    3</sup>
+                  <a target="_blank" href="https://animesh.garg.tech/">Animesh Garg</a><sup>1</sup>
                 </span>
             </div>
 
             <div class="is-size-5 publication-authors">
               <span class="author-block"><sup>1</sup>Georgia Institute of Technology,</span>
-              <span class="author-block"><sup>2</sup>UC San Diego,</span>
-              <span class="author-block"><sup>3</sup>Nvidia</span>
+              <span class="author-block"><sup>2</sup>UC San Diego</span>
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
                 <!-- PDF Link. -->
-                <!-- <span class="link-block">
-                                    <a target="_blank" href="https://openreview.net/forum?id=VQOoHBRbpC"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon">
-                                            <i class="fas fa-file-pdf"></i>
-                                        </span>
-                                        <span>Paper</span>
-                                    </a>
-                                </span> -->
+                <span class="link-block">
+                  <a target="_blank" href="https://openreview.net/forum?id=hOELrZfg0J"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
 
                 <!-- Arxiv Link. -->
                 <span class="link-block">
@@ -199,8 +197,8 @@ datacampcourse: true
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             Reinforcement Learning (RL) has made significant strides in complex tasks but struggles in multi-task
-            settings with different embodiments. World models methods offer scalability by learning a simulation of the
-            environment, but often rely on inefficient gradient-free optimization methods for policy extraction. In
+            settings with different embodiments. World model methods offer scalability by learning a simulation of the
+            environment but often rely on inefficient gradient-free optimization methods for policy extraction. In
             contrast, gradient-based methods exhibit lower variance but fail to handle discontinuities. Our work reveals
             that well-regularized world models can generate smoother optimization landscapes than the actual dynamics,
             facilitating more effective first-order optimization. We introduce Policy learning with multi-task World
@@ -208,7 +206,7 @@ datacampcourse: true
             pre-trained on offline data, and then policies are extracted from it using first-order optimization in less
             than 10 minutes per task. PWM effectively solves tasks with up to 152 action dimensions and outperforms
             methods that use ground-truth dynamics. Additionally, PWM scales to an 80-task setting, achieving up to 27\%
-            higher rewards than existing baselines, without relying on costly online planning.
+            higher rewards than existing baselines without relying on costly online planning.
           </div>
         </div>
       </div>
